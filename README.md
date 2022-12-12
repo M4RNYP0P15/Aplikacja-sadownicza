@@ -1,4 +1,4 @@
-# Aplikacja sadownicza
+# Strona sadownicza
 Tworzy: 
 >Grzegorz Kamil Marcińczyk
 
