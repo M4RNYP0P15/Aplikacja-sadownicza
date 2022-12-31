@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="container">
+    <div class="p-3 m-3">
+        <div class="col-lg-5 rounded mx-auto border pt-4">
+            <h3 class="alert alert-light rounded-pill text-center" >Logowanie Admina</h3>
+
+            <form class="box" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {% render_field form.username class="form-control" placeholder="Username" autocomplete="off" %}
+                </div>
+                <div class="form-group">
+                    {% render_field form.password class="form-control" placeholder="Hasło" %}
+                </div>
+                <input type="submit" class="btn btn-sm btn-success col-lg-12" name="" value="Zaloguj">
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

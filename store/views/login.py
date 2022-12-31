@@ -1,9 +1,51 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
 from store.models.customer import Customer
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.views import View
+from django.contrib import messages
+
+def is_customer(user):
+    return user.groups.filter(name='CUSTOMER').exists()
 
 
+def afterlogin_view(request):
+    if is_customer(request.user):
+        return redirect('store:homepage')
+    else:
+        return redirect('store:admin-dashboard')
+
+@login_required
+def custom_logout(request):
+	logout(request)
+	messages.info(request, "Zostałeś pomyślnie wylogowany!")
+	return redirect('store:homepage')
+
+def custom_login(request):
+	if request.user.is_authenticated:
+		return redirect('store:homepage')
+
+	if request.method == 'POST':
+		form = AuthenticationForm(request=request, data=request.POST)
+		if form.is_valid():
+			user = authenticate(username=form.cleaned_data['username'],
+								password=form.cleaned_data['password'],
+			)
+			if user is not None:
+				login(request, user)
+				messages.success(request, f"Witaj <b>{user.username}</b>! Pomyślnie zalogowano!")
+				return redirect('store:homepage')
+		else:
+			for error in list(form.errors.values()):
+				messages.error(request, error)
+
+	form = AuthenticationForm()
+	return render(request=request, template_name="login.html", context={'form': form})
+
+### usunac
 class Login(View):
 	return_url = None
 
@@ -27,9 +69,9 @@ class Login(View):
 					Login.return_url = None
 					return redirect('homepage')
 			else:
-				error_message = 'Invalid !!'
+				error_message = 'Nie poprawne dane logowania!'
 		else:
-			error_message = 'Invalid !!'
+			error_message = 'Użytkownik o podanym adresie email nie istnieje!'
 
 		print(email, password)
 		return render(request, 'login.html', {'error': error_message})

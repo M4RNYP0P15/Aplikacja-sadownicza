@@ -1,0 +1,46 @@
+.bs-example {
+    margin: 0px;
+
+  }
+
+  .navbar-brand {
+    font-size: 20px;
+    font-family: sans-serif;
+
+  }
+
+      /*---------------------------------------
+         Social section
+      -----------------------------------------*/
+      footer {
+        padding: 0px 0px 0px 0px;
+        background-color: black;
+        margin: 0px;
+      }
+
+
+      #ftr {
+
+        padding: 20px;
+      }
+
+      .fa {
+        font-size: 23px;
+        width: 2em;
+        height: 2em;
+        text-align: center;
+        text-decoration: none;
+        margin: 5px 2px;
+        border-radius: 50%;
+        padding-top: 0.5em;
+    }
+
+      .fa:hover {
+        opacity: 0.5;
+        text-decoration: none;
+      }
+
+      p {
+        text-align: center;
+
+      }

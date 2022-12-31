@@ -1,0 +1,103 @@
+{% extends 'admin/admin_base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/admin/dashboard_cards.css' %}" media="screen">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<div class="container" >
+  <div class="market-updates">
+    <div class="col-md-4 market-update-gd">
+      <div class="market-update-block clr-block-1">
+        <div class="col-md-8 market-update-left">
+          <h3>{{customercount}}</h3>
+          <h4>Zarejestrowanych klientów</h4>
+
+        </div>
+        <div class="col-md-4 market-update-right">
+          <i class="fa fa-users"></i>
+        </div>
+        <div class="clearfix"> </div>
+      </div>
+    </div>
+    <div class="col-md-4 market-update-gd">
+      <div class="market-update-block clr-block-2">
+        <div class="col-md-8 market-update-left">
+          <h3>{{productcount}}</h3>
+          <h4>Wszystkich produktów</h4>
+
+        </div>
+        <div class="col-md-4 market-update-right">
+          <i class="fa fa-shopping-cart"></i>
+        </div>
+        <div class="clearfix"> </div>
+      </div>
+    </div>
+    <div class="col-md-4 market-update-gd">
+      <div class="market-update-block clr-block-3">
+        <div class="col-md-8 market-update-left">
+          <h3>{{ordercount}}</h3>
+          <h4>Wszystkich zamówień</h4>
+
+        </div>
+        <div class="col-md-4 market-update-right">
+          <i class="fa fa-bar-chart"> </i>
+        </div>
+        <div class="clearfix"> </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<hr>
+<div class="container" >
+
+    <div class="panel panel-primary" >
+      <div class="panel-heading" style="text-align:center;">
+        <h6 class="panel-title">Ostatnie zamówienia</h6>
+      </div>
+      <table class="table table-hover table-bordered" id="dev-table">
+        <thead>
+          <tr>
+            <th>Nabywca</th>
+            <th>Numer telefonu</th>
+            <th>Adres dostawy</th>
+            <th>Produkt</th>
+            <th>Image</th>
+            <th>Status</th>
+
+          </tr>
+        </thead>
+        {% for product,customer,order in data %}
+        <tr>
+          {% for c in customer %}
+          <td> {{c.get_name}}</td>
+          <td>{{c.mobile}}</td>
+          <td>{{order.address}}</td>
+
+          {% endfor %}
+          {% for p in product %}
+          <td> {{p.name}}</td>
+          <td> <img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+
+          {% if order.status == 'Oczekujące'%}
+          <td> <span class="label label-info">{{order.status}}</span></td>
+          {% elif order.status == 'Dostarczone' %}
+          <td> <span class="label label-success">{{order.status}}</span></td>
+          {% elif order.status == 'Out for Delivery' %}
+          <td> <span class="label label-warning">{{order.status}}</span></td>
+          {%else%}
+            <td> <span class="label label-primary">{{order.status}}</span></td>
+          {%endif%}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+
+      </table>
+
+  </div>
+</div>
+
+{% endblock content %}

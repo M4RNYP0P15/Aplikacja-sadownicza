@@ -1,0 +1,11 @@
+nav{
+    background-color: green;
+}
+.one-edge-shadow {
+    box-shadow: 0 8px 2px -5px rgb(246, 245, 245);
+}
+.display-8{
+    font-weight: 200;
+    font-size: 30px;
+    font-colour: $teal-200;
+}

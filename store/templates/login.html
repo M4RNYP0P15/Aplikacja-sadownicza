@@ -1,21 +1,12 @@
 {% extends 'base.html' %}
-
+{% load widget_tweaks %}
 
 {% block content %}
-
 <div class="container">
     <div class="p-3 m-3">
         <div class="col-lg-5 rounded mx-auto border pt-4">
-            <div class="text-center col">
-            
-                <img
-                src="https://th.bing.com/th/id/Rd51d7c0fde6d96a31538a86cbd57f3c0?rik=%2fTJxRkU2V371QQ&riu=http%3a%2f%2ftechnologyend.com%2fwp-content%2fuploads%2f2015%2f11%2fwhy-shop-online.jpg&ehk=v1KiYT0i5U1ABCRueDSdLqnazh2BdlVD89Z4qXE0Kgs%3d&risl=&pid=ImgRaw" alt=""
-                class="" style="height: 150px;">
-            <hr>
-            </div>
-            <h3 class="alert alert-light rounded-pill" style="text-align:center" >Logowanie</h3>
-            <form action="/login" method="POST">
-                
+            <h3 class="alert alert-light rounded-pill text-center" >Logowanie</h3>
+            <form class="box" method="post">
                 {% csrf_token %}
 
                 {% if error%}
@@ -23,37 +14,20 @@
                     {{error}}
                 </div>
                 {% endif %}
-                <!-- email -->
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input required type="email" name="email" id=""
-                    value="{{values.email}}" 
-                    class=" form-control-sm form-control" placeholder="abcd@gmail.com">
-                </div>
+                        {% render_field form.username class="form-control form-group" placeholder="Adres email" autocomplete="off" %}
+                        {% render_field form.password class="form-control form-group" placeholder="Hasło" %}
+                   <input class="btn btn-sm btn-success col-lg-12" type="submit" name="" value="Zaloguj" >
 
-
-                <!-- password -->
-                <div class="form-group">
-                    <label for="">Hasło</label>
-                    <input type="password" 
-                    name="password" 
-                    id=""
-                     class="form-control form-control-sm" >
-                </div>
-
-                <!--Checkme button-->
-            <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label d-grid gap-2" for="exampleCheck1">Check me out</label>
-                </div>
-                <hr>
-                <button type="submit" class="btn btn-sm btn-success col-lg-12">Zaloguj</button>
-
-
-                
             </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Nie masz konta? <a class="ml-2" href="/signup">Zarejestruj się</a>
+                </small><br>
+                <small class="text-muted">
+                    <a href="/">Nie pamiętasz hasła?</a>
+                </small>
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock %}

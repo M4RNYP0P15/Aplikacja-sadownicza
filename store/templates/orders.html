@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 {% load cart %}
 {% load custom_filter %}
@@ -26,7 +25,7 @@
                 {% for order in orders %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td><img style="height: 80px;" class="rounded-circle" src="{{order.product.image.url}}" alt=""></td>
+                    <td><img class="rounded-circle order_image" src="{{order.product.image.url}}" alt=""></td>
                     <td>{{order.product.name}}</td>
                     <td>{{order.date}}</td>
                     <td>{{order.price|currency}}</td>
