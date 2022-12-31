@@ -27,7 +27,7 @@ Aplikacja do zarządzania sądem.
 git clone https://github.com/M4RNYP0P15/Aplikacja-sadownicza.git
 ```
 ```
-cd event-calendar
+cd (folder)
 ```
 ```
 python3 -m venv venv
