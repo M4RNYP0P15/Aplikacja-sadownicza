@@ -8,14 +8,17 @@ from .views.login import afterlogin_view, custom_login, custom_logout
 from .views.cart import Cart
 from .views.checkout import CheckOut
 from .views.orders import OrderView
+from .views.password_back import password_change, password_reset_request, passwordResetConfirm
 from .middleware.auth import auth_middleware
 # from django.contrib.auth.views import LogoutView, LoginView
+from .views.profile import profile
 from .views.admin_dashboard import admin_dashboard_view, admin_add_product_view, admin_products_view, admin_view_booking_view, view_customer_view, delete_order_view, update_order_view, delete_product_view, update_product_view, delete_customer_view, update_customer_view
 app_name = "store"
 
 urlpatterns = [
     path('', Index.as_view(), name='homepage'),
     path('store', store, name='store'),
+
 
     # path('signup', Signup.as_view(), name='signup'),
     path('signup', customer_signup_view),
@@ -24,7 +27,12 @@ urlpatterns = [
     path('logged', afterlogin_view, name='afterlogin'),
     # path('logout', LogoutView.as_view(template_name='logout.html'),name='logout'),
     path('logout', custom_logout, name='logout'),
-    # path('logout', logout, name='logout'),
+    path('profile/<username>', profile, name='profile'),
+
+    path("password_change", password_change, name="password_change"),
+    path("password_reset", password_reset_request, name="password_reset"),
+    path('reset/<uidb64>/<token>', passwordResetConfirm, name='password_reset_confirm'),
+
     # path('customer-home', views.customer_home_view,name='customer-home'),
 
     path('admin-dashboard', admin_dashboard_view,name='admin-dashboard'),

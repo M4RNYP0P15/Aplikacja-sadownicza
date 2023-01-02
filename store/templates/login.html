@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
     <div class="p-3 m-3">
@@ -14,9 +14,9 @@
                     {{error}}
                 </div>
                 {% endif %}
-                        {% render_field form.username class="form-control form-group" placeholder="Adres email" autocomplete="off" %}
-                        {% render_field form.password class="form-control form-group" placeholder="Hasło" %}
-                   <input class="btn btn-sm btn-success col-lg-12" type="submit" name="" value="Zaloguj" >
+                {{ form|crispy }}
+
+                <input class="btn btn-sm btn-success col-lg-12" type="submit" name="" value="Zaloguj" >
 
             </form>
             <div class="border-top pt-3">
@@ -24,7 +24,7 @@
                     Nie masz konta? <a class="ml-2" href="/signup">Zarejestruj się</a>
                 </small><br>
                 <small class="text-muted">
-                    <a href="/">Nie pamiętasz hasła?</a>
+                    <a href="{% url 'store:password_reset' %}">Nie pamiętasz hasła?</a>
                 </small>
             </div>
         </div>
