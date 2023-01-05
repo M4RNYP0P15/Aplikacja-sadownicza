@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from .models import category, customer, orders, product
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm, PasswordChangeForm, PasswordResetForm
 from django.contrib.auth import get_user_model
@@ -42,13 +42,13 @@ class PasswordResetForm(PasswordResetForm):
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
 
-class CustomerUserForm(forms.ModelForm):
-    class Meta:
-        model=User
-        fields=['first_name','last_name','username','password']
-        widgets = {
-        'password': forms.PasswordInput()
-        }
+# class CustomerUserForm(forms.ModelForm):
+#     class Meta:
+#         model=User
+#         fields=['first_name','last_name','username','password']
+#         widgets = {
+#         'password': forms.PasswordInput()
+#         }
         
 class CustomerForm(forms.ModelForm):
     class Meta:

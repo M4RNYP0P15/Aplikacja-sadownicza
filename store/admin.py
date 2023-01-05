@@ -14,9 +14,9 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
-
-admin.site.register(Products, AdminProduct)
-
-admin.site.register(Category)
 admin.site.register(Customer)
+admin.site.register(Products, AdminProduct)
+# admin.site.register(User)
+admin.site.register(Category)
+
 admin.site.register(Order)

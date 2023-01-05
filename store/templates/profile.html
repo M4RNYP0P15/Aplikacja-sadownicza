@@ -6,6 +6,17 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="media">
+            {% if user.username == form.instance.username %}
+                <input id="id_image" type="file" name="image" hidden/>
+                    <label for="id_image">
+                        <img class="rounded-circle account-img profile-image"
+                            style="cursor: pointer"
+                            src="{{ form.instance.profile_pic.url }}"
+                            title="Zmień zdjęcie profilowe">
+                    </label>
+            {% else %}
+                <img class="rounded-circle account-img profile-image", src="{{ form.instance.profile_pic.url }}">
+            {% endif %}
             <div class="media-body">
                 <h2 class="account-heading">{{ form.instance.username }}
                     {% if form.instance.is_active %}
@@ -16,7 +27,7 @@
                 </h2>
                 <p class="text-secondary">{{ form.instance.first_name }} {{ form.instance.last_name }}</p>
                 <p class="text-secondary">{{ form.instance.email }}</p>
-                <p class="text-secondary">{{ form.instance.description }}</p>
+                <!-- <p class="text-secondary">{{ form.instance.description }}</p> -->
             </div>
         </div>
 

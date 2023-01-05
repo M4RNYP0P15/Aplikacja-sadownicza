@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'captcha',
 ]
 
+AUTH_USER_MODEL = 'store.Customer'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

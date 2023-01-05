@@ -1,0 +1,21 @@
+.aspect-ratio-box {
+    position: relative;
+  }
+  
+  /* Create a pseudo element that uses padding-bottom to take up space */
+  .aspect-ratio-box::after {
+    display: block;
+    content: '';
+    /* 16:9 aspect ratio,  9 / 16 * 100% = 56.25*/
+    padding-bottom: 56.25%;
+  }
+  
+  /* Image is positioned absolutely relative to the parent element */
+  .aspect-ratio-box img {
+    /* Image should match parent box size */
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }

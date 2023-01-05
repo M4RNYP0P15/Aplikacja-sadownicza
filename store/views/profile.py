@@ -10,8 +10,8 @@ def profile(request, username):
         form = UserUpdateForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             user_form = form.save()
-            messages.success(request, f'{user_form}, Twój profil został zmodyfikowany!')
-            return redirect('profile', user_form.username)
+            messages.success(request, f'{user_form.username}, Twój profil został zmodyfikowany!')
+            return redirect('store:profile', user_form.username)
 
         for error in list(form.errors.values()):
             messages.error(request, error)
