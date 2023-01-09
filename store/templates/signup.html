@@ -1,33 +1,25 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
-
+{% load crispy_forms_tags %}
 {% block content %}
+<div class="content-section">
+  <form method="POST">
+      {% csrf_token %}
+      <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Rejestracja</legend>
+          {{ form|crispy }}
+      </fieldset>
 
-<div class="container mt-4">
-    
-    <div class="p-3 m-3">
+      Rejestrując się, akceptujesz Warunki korzystania z usługi i Politykę prywatności
 
-        <div class="col-lg-5 rounded mx-auto border pt-4">
-            <h3 class="alert alert-success rounded-pill" style="text-align:center">Tworzenie konta</h3>
-            <form class="box" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                  
-                    {% render_field userForm.first_name class="form-control form-group" placeholder="Imię" %}
-                      {% render_field userForm.last_name class="form-control form-group" placeholder="Nazwisko" %}
-                        {% render_field userForm.username class="form-control form-group" placeholder="Nazwa użytkownika" %}
-                          {% render_field userForm.password class="form-control form-group" placeholder="Hasło" %}
-                            {% render_field customerForm.address class="form-control form-group" placeholder="Adres" %}
-                              {% render_field customerForm.phone class="form-control form-group" placeholder="Nr. telefonu" %}
-                                {% render_field customerForm.profile_pic class="form-control form-group" placeholder="Zdjęcie profilowe" %}
-                
-                   <input type="submit" class="btn btn-sm btn-success col-lg-12" name="" value="Stwórz">
-
-              </form>
-            <div class="w-100">
-                <p class="mt-4">Mam już konto! <a href="{% url 'store:login' %}">Zaloguj się</a></p>
-            </div>
-        </div>
-    </div>
+      <div class="form-group">
+          <button class="btn btn-outline-info" type="submit">Zarejestruj się</button>
+      </div>
+  </form>
+  <div class="border-top pt-3">
+      <small class="text-muted">
+        Masz już konto? <a class="ml-2" href="{% url 'store:login' %}">Zaloguj się</a>
+      </small>
+  </div>
 </div>
 
 {% endblock %}

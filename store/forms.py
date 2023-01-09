@@ -1,7 +1,7 @@
 from django import forms
 # from django.contrib.auth.models import User
 from .models import category, customer, orders, product
-from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm, PasswordChangeForm, PasswordResetForm
+from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm, PasswordChangeForm, PasswordResetForm, UserCreationForm
 from django.contrib.auth import get_user_model
 
 from captcha.fields import ReCaptchaField
@@ -28,8 +28,23 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'email', 'profile_pic']
 
+# class CustomerForm(forms.ModelForm):
+#     class Meta:
+#         model=customer.Customer
+#         fields=['address','phone','profile_pic']
+
+class CustomerUserForm(forms.ModelForm):
+    class Meta:
+        model = customer.Customer
+        fields=[
+            'first_name',
+            'last_name',
+            'username', 
+            'profile_pic', 
+            'address','phone'
+            ]
 
 class SetPasswordForm(SetPasswordForm):
     class Meta:
@@ -42,19 +57,20 @@ class PasswordResetForm(PasswordResetForm):
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
 
-# class CustomerUserForm(forms.ModelForm):
-#     class Meta:
-#         model=User
-#         fields=['first_name','last_name','username','password']
-#         widgets = {
-#         'password': forms.PasswordInput()
-#         }
-        
-class CustomerForm(forms.ModelForm):
-    class Meta:
-        model=customer.Customer
-        fields=['address','phone','profile_pic']
+class UserRegistrationForm(UserCreationForm):
+    email = forms.EmailField(help_text='Wprowadz adres email.', required=True)
 
+    class Meta:
+        model = get_user_model()
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super(UserRegistrationForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+
+        return user
 
 class ProductForm(forms.ModelForm):
     class Meta:

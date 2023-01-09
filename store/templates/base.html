@@ -46,6 +46,9 @@
         </li>
 
         {% if user.is_authenticated %}
+          {% if user.is_superuser %}
+          <a class="nav-item nav-link" href="admin-dashboard/">Admin</a>
+          {% endif %}
         <li class="nav-item active ">
           <a class="nav-item nav-link" href="{% url 'store:profile' user.username %}">{{user.username}} <i class="fas fa-user"></i></a>
         </li>

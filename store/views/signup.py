@@ -11,29 +11,32 @@ from store import forms
 def customer_signup_view(request):
     if request.user.is_authenticated:
         return redirect("/")
-    userForm=forms.CustomerUserForm()
-    customerForm=forms.CustomerForm()
-    mydict={'userForm':userForm,'customerForm':customerForm}
+    # userForm=forms.CustomerUserForm()
+    # customerForm=forms.CustomerForm()
+    # mydict={'userForm':userForm,'customerForm':customerForm}
     if request.method=='POST':
-        userForm=forms.CustomerUserForm(request.POST)
-        customerForm=forms.CustomerForm(request.POST,request.FILES)
-        if userForm.is_valid() and customerForm.is_valid():
-            user=userForm.save()
-            user.set_password(user.password)
-            user.save()
-            customer=customerForm.save(commit=False)
-            customer.user=user
-            customer.save()
-            my_customer_group = Group.objects.get_or_create(name='CUSTOMER')
-            my_customer_group[0].user_set.add(user)
+        form = forms.UserRegistrationForm(request.POST)
+        # userForm=forms.CustomerUserForm(request.POST)
+        # customerForm=forms.CustomerForm(request.POST,request.FILES)
+        if form.is_valid():
+            user=form.save()
+            # user.set_password(user.password)
+            # user.save()
+            # customer=customerForm.save(commit=False)
+            # customer.user=user
+            # customer.save()
+            # my_customer_group = Group.objects.get_or_create(name='CUSTOMER')
+            # my_customer_group[0].user_set.add(user)
             login(request, user)
             messages.success(request, f"Uworzono nowe konto: {user.username}")
             return HttpResponseRedirect('logged')
         else:
-            for error in list(userForm.errors.values() )+ list(customerForm.errors.values()):
+            for error in list(form.errors.values()):
                 messages.error(request, error)
+    else:
+        form = forms.UserRegistrationForm()
 
-    return render(request,'signup.html',context=mydict)
+    return render(request,'signup.html',context={"form": form})
 
 # class Signup (View):
 # 	def get(self, request):

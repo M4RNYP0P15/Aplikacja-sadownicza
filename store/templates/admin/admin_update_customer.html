@@ -1,5 +1,6 @@
 {% extends 'admin/admin_base.html' %} 
-{% load widget_tweaks %} 
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <head>
@@ -47,6 +48,21 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
+<div class="content-section">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">cos</legend>
+            {{ form|crispy }}
+            {{ form.media }}
+        </fieldset>
+
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Zaktualizuj</button>
+        </div>
+    </form>
+</div>
+
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}

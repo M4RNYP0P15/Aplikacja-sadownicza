@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ubc+pqx(9#*oe#__%xc5pfe@adnx-o5+4=98=^=bt-$!mo9oy-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.3.247', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 RECAPTCHA_PUBLIC_KEY = '6LdwAsAjAAAAAD894D9QYCSZ92qTkOpEpDWev7rV'
 RECAPTCHA_PRIVATE_KEY = '6LdwAsAjAAAAAMXYx16xiD6wYW87LNXGNnsM3oGL'

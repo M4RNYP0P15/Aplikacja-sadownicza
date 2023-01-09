@@ -39,8 +39,6 @@ def view_customer_view(request):
 @login_required(login_url='adminlogin')
 def delete_customer_view(request,pk):
     _customer=customer.Customer.objects.get(id=pk)
-    user=User.objects.get(id=_customer.user_id)
-    user.delete()
     _customer.delete()
     return redirect('store:view-customer')
 
@@ -48,20 +46,20 @@ def delete_customer_view(request,pk):
 @login_required(login_url='adminlogin')
 def update_customer_view(request,pk):
     _customer=customer.Customer.objects.get(id=pk)
-    user=User.objects.get(id=_customer.user_id)
-    userForm=forms.CustomerUserForm(instance=user)
-    customerForm=forms.CustomerForm(request.FILES,instance=_customer)
-    mydict={'userForm':userForm,'customerForm':customerForm}
     if request.method=='POST':
-        userForm=forms.CustomerUserForm(request.POST,instance=user)
-        customerForm=forms.CustomerForm(request.POST,instance=_customer)
-        if userForm.is_valid() and customerForm.is_valid():
-            user=userForm.save()
-            user.set_password(user.password)
-            user.save()
-            customerForm.save()
+        form=forms.CustomerUserForm(request.POST,instance=_customer)
+        # customerForm=forms.CustomerForm(request.POST,instance=_customer)
+        if form.is_valid():
+            form.save()
+            # user.set_password(user.password)
+            # user.save()
+            # customerForm.save()
             return redirect('store:view-customer')
-    return render(request,'admin/admin_update_customer.html',context=mydict)
+    # user=User.objects.get(id=_customer.user_id)
+    form=forms.CustomerUserForm(instance=_customer)
+    # customerForm=forms.CustomerForm(request.FILES,instance=_customer)
+    
+    return render(request,'admin/admin_update_customer.html',context={'form':form})
 
 # admin view the product
 @login_required(login_url='adminlogin')
