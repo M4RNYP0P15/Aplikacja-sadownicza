@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store',
+    'my_calendar',
     #'store.apps.StoreConfig',
     'widget_tweaks',
     'crispy_forms',

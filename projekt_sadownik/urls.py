@@ -20,6 +20,7 @@ from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("calendar/", include("my_calendar.urls")),
     path('', include('store.urls')),
 ] 
 if settings.DEBUG:
