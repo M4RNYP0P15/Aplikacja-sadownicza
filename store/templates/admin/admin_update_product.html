@@ -1,60 +1,21 @@
-{% extends 'ecom/admin_base.html' %} 
-{% load widget_tweaks %} 
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+{% block title %}Modyfikuj produkt{% endblock %}
+{% block extracss %}{% endblock %}
+
+{% load widget_tweaks %}
+
 {% block content %}
-
-<head>
-    <style media="screen">
-        a:link {
-            text-decoration: none;
-        }
-        
-        .note {
-            text-align: center;
-            height: 80px;
-            background: #0F2027;
-            /* fallback for old browsers */
-            color: #fff;
-            font-weight: bold;
-            line-height: 80px;
-        }
-        
-        .form-content {
-            padding: 5%;
-            border: 1px solid #ced4da;
-            margin-bottom: 2%;
-        }
-        
-        .form-control {
-            border-radius: 1.5rem;
-        }
-        
-        .btnSubmit {
-            border: none;
-            border-radius: 1.5rem;
-            padding: 1%;
-            width: 20%;
-            cursor: pointer;
-            background: #005d94;
-            color: #fff;
-        }
-        
-        .menu {
-            top: 50px;
-        }
-    </style>
-
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-
+<h1 class="h3 mb-2 text-gray-800">Modyfikuj produkt</h1>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Modyfikuj produkt</h6>
+  </div>
+  <div class="card-body">
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="container register-form">
         <div class="form">
-            <div class="note">
-                <p>Update Product Details</p>
-            </div>
             <div class="form-content">
                 <div class="row">
                     <div class="col-md-6">
@@ -83,5 +44,8 @@
         </div>
     </div>
 </form>
-
+</div>
+</div>
 {% endblock content %}
+{% block script %}
+{% endblock script %}
