@@ -43,7 +43,8 @@ class CustomerUserForm(forms.ModelForm):
             'last_name',
             'username', 
             'profile_pic', 
-            'address','phone'
+            'address',
+            'phone'
             ]
 
 class SetPasswordForm(SetPasswordForm):

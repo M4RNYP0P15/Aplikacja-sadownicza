@@ -5,11 +5,11 @@ from .views.home import Index, store
 from .views.signup import customer_signup_view
 # from .views.login import Login, logout, afterlogin_view
 from .views.login import afterlogin_view, custom_login, custom_logout
-from .views.cart import Cart
+from .views.cart import cart_view
 from .views.checkout import CheckOut
-from .views.orders import OrderView
-from .views.password_back import password_change, password_reset_request, passwordResetConfirm
-from .middleware.auth import auth_middleware
+from .views.orders import my_order_view
+from .views.password_back import password_change, password_reset_request, passwordResetConfirm, activate
+# from .middleware.auth import auth_middleware
 # from django.contrib.auth.views import LogoutView, LoginView
 from .views.profile import profile
 from .views.admin_dashboard import admin_dashboard_view, admin_add_product_view, admin_products_view, admin_view_booking_view, view_customer_view, delete_order_view, update_order_view, delete_product_view, update_product_view, delete_customer_view, update_customer_view
@@ -33,6 +33,7 @@ urlpatterns = [
     path("password_reset", password_reset_request, name="password_reset"),
     path('reset/<uidb64>/<token>', passwordResetConfirm, name='password_reset_confirm'),
 
+    path("activate/<uidb64>/<token>", activate, name='activate'),
     # path('customer-home', views.customer_home_view,name='customer-home'),
 
     path('admin-dashboard', admin_dashboard_view,name='admin-dashboard'),
@@ -49,7 +50,8 @@ urlpatterns = [
     path('delete-order/<int:pk>', delete_order_view,name='delete-order'),
     path('update-order/<int:pk>', update_order_view,name='update-order'),
     
-    path('cart', auth_middleware(Cart.as_view()), name='cart'),
+    # path('cart', auth_middleware(Cart.as_view()), name='cart'),
+    path('cart', cart_view, name='cart'),
     path('check-out', CheckOut.as_view(), name='checkout'),
-    path('orders', auth_middleware(OrderView.as_view()), name='orders'),
+    path('orders', my_order_view, name='orders'),
 ]

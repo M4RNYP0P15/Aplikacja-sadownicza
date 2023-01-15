@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Event Details
+Szczegóły wydarzenia
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="clearfix">
             <a class="btn btn-primary left" href="{% url 'my_calendar:calendar' %}"> Kalendarz </a>
-            <a class="btn btn-info right mr-2" href="{% url 'my_calendar:event_edit' event.pk %}"> Edit Event </a>
+            <a class="btn btn-info right mr-2" href="{% url 'my_calendar:event_edit' event.pk %}"> Edytuj wydarzenie </a>
         </div>
 
         <div class="clearfix">

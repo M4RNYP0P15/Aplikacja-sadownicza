@@ -6,7 +6,7 @@
     <a class="btn btn-info right" href="{% url '/logout' %}"> Wyloguj się</a>
 	<a class="btn btn-info right mr-2" href="{% url 'my_calendar:calendar' %}?{{ next_month }} "> Miesiąc >> </a>
     <a class="btn btn-info right mr-2" href="{% url 'my_calendar:calendar' %}?{{ prev_month }}"> << Miesiąc </a>
-    <a class="btn btn-info right mr-2" href="{% url 'my_calendar:event_new' %}"> + New Event </a>
+    <a class="btn btn-info right mr-2" href="{% url 'my_calendar:event_new' %}"> + Nowe wydarzenie </a>
 </div>
 <div style="color: blueviolet;">
     {{ calendar }}

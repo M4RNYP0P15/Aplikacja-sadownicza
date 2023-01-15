@@ -9,10 +9,7 @@
             {% if user.username == form.instance.username %}
                 <input id="id_image" type="file" name="image" hidden/>
                     <label for="id_image">
-                        <img class="rounded-circle account-img profile-image"
-                            style="cursor: pointer"
-                            src="{{ form.instance.profile_pic.url }}"
-                            title="Zmień zdjęcie profilowe">
+                        <img class="rounded-circle account-img profile-image" style="cursor: pointer" src="{{ form.instance.profile_pic.url }}" title="Zmień zdjęcie profilowe">
                     </label>
             {% else %}
                 <img class="rounded-circle account-img profile-image", src="{{ form.instance.profile_pic.url }}">

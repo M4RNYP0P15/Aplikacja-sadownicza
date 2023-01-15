@@ -1,57 +1,59 @@
-{% extends 'admin/admin_base.html' %}
+{% extends 'admin/base_admin.html' %}
 {% load static %}
+{% block title %}Lista klientów{% endblock %}
+{% block extracss %}
+<link href="{% static 'admin/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-
-
-<head>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-  <style media="screen">
-    a:link {
-      text-decoration: none;
-    }
-
-    h6 {
-      text-align: center;
-    }
-
-    .row {
-      margin: 100px;
-    }
-  </style>
-</head>
-
-<div class="container">
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h6 class="panel-title">Wszyscy klienci</h6>
-    </div>
-    <table class="table table-hover table-bordered" id="dev-table">
-      <thead>
-        <tr>
-          <th>Nazwa</th>
-          <th>Picture</th>
-          <th>Nr. telefonu</th>
-          <th>Adres</th>
-          <th>Akcje</th>
-        </tr>
-      </thead>
-      {% for c in customers %}
-      <tr>
-        <td> {{c.get_name}}</td>
-        
-        <td> <img src="{% static c.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
-        <td>{{c.phone}}</td>
-        <td>{{c.address}}</td>
-        <td><a class="btn btn-primary btn-xs" href="{% url 'store:update-customer' c.id  %}"><span class="glyphicon glyphicon-edit"></span></a>
-        <a class="btn btn-danger btn-xs" href="{% url 'store:delete-customer' c.id  %}"><span class="glyphicon glyphicon-trash"></span></a></td>
-
-      </tr>
-      {% endfor %}
-    </table>
+<h1 class="h3 mb-2 text-gray-800">Lista klientów</h1>
+<p class="mb-4">Delow.</p>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Lista klientów</h6>
+  </div>
+  <div class="card-body">
+      <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Nazwa</th>
+                  <th>Zdj. profilowe</th>
+                  <th>Nr. telefonu</th>
+                  <th>Adres</th>
+                  <th>Akcje</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Nazwa</th>
+                  <th>Zdj. profilowe</th>
+                  <th>Nr. telefonu</th>
+                  <th>Adres</th>
+                  <th>Akcje</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                {% for c in customers %}
+                <tr>
+                  <td> {{c.get_name}}</td>
+                  <td> <img src="{{ c.profile_pic.url }}" alt="Profile Pic" height="40px" width="40px" /></td>
+                  <td>{{c.phone}}</td>
+                  <td>{{c.address}}</td>
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'store:update-customer' c.id  %}"><i class="fas fa-edit"></i></a>
+                  <a class="btn btn-danger btn-xs" href="{% url 'store:delete-customer' c.id  %}"><i class="fas fa-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+      </div>
   </div>
 </div>
 
 {% endblock content %}
+{% block script %}
+    <script src="{% static 'admin/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <script src="{% static 'admin/js/demo/datatables-demo.js' %}"></script>
+{% endblock script %}

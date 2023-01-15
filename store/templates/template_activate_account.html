@@ -1,0 +1,7 @@
+{% autoescape off %}
+Witaj {{ user.username }},
+
+Wciśnij link poniżej aby powiązać ten adres z kontem, tym samym zakończyć proces rejestracji:
+
+http://{{ domain }}{% url 'store:activate' uidb64=uid token=token %}
+{% endautoescape %}

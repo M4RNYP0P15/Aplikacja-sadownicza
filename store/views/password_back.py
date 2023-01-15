@@ -20,7 +20,7 @@ def password_change(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Hasło zostało zmienione")
-            return redirect('login')
+            return redirect('store:login')
         else:
             for error in list(form.errors.values()):
                 messages.error(request, error)
@@ -76,4 +76,62 @@ def password_reset_request(request):
         )
 
 def passwordResetConfirm(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Twoje hasło zostało ustawione. Możesz się <b>zalogować</b>.")
+                return redirect('store:homepage')
+            else:
+                for error in list(form.errors.values()):
+                    messages.error(request, error)
+
+        form = SetPasswordForm(user)
+        return render(request, 'password/password_reset_confirm.html', {'form': form})
+    else:
+        messages.error(request, "Link wygasł")
+
+    messages.error(request, 'Coś poszło nie tak, powracanie do strony głównej')
     return redirect("store:homepage")
+
+def activateEmail(request, user, to_email):
+    mail_subject = 'Aktywuj swoje konto.'
+    message = render_to_string('template_activate_account.html', {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    print(message)
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+        messages.success(request, f'Szanowny <b>{user}</b>, proszę sprawdzić swoją pocztę <b>{to_email}</b> i wcisnąć w \
+            otrzymany link aktywacyjny w celu potwierdzenia i zakończenia procesu rejestracji. <b>Uwaga:</b> Sprawdź folder spam.')
+    else:
+        messages.error(request, f'Wystąpił problem podczas wysyłania maila {to_email}, sprawdź czy został wpisany poprawnie.')
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+    
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, "Dziękujemy za potwierdzenie adresu email. Możesz zalogować się na swoje konto.")
+        return redirect('store:login')
+    else:
+        messages.error(request, "Nie poprawny link aktywacyjny!")
+    return redirect('store:homepage')

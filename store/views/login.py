@@ -21,6 +21,7 @@ def afterlogin_view(request):
 
 @login_required
 def custom_logout(request):
+	# request.session.clear()
 	logout(request)
 	messages.info(request, "Zostałeś pomyślnie wylogowany!")
 	return redirect('store:homepage')
@@ -38,6 +39,7 @@ def custom_login(request):
 			)
 			if user is not None:
 				login(request, user)
+				# request.session['customer'] = user.id
 				messages.success(request, f"Witaj <b>{user.username}</b>! Pomyślnie zalogowano!")
 				return redirect('store:homepage')
 		else:

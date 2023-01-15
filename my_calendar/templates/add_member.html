@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Add EventMember
-{% endblock %}
+{% block title %}Dodaj członka wydarzenia{% endblock %}
 
 {% block content %}
 <div class="clearfix">
-  <a class="btn btn-info left" href="{% url 'my_calendar:calendar' %}"> Calendar </a>
+  <a class="btn btn-info left" href="{% url 'my_calendar:calendar' %}"> Kalendarz </a>
 </div>
 
 <form method="post">
