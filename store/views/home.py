@@ -42,7 +42,8 @@ def store(request):
 	if not cart:
 		request.session['cart'] = {}
 	products = None
-	categories = Category.get_all_categories()
+	# categories = Category.get_all_categories()
+	categories = Category.objects.all()
 	categoryID = request.GET.get('category')
 	if categoryID:
 		products = Products.get_all_products_by_categoryid(categoryID)

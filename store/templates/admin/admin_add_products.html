@@ -1,9 +1,9 @@
 {% extends 'admin/base_admin.html' %}
 {% load static %}
-{% block title %}404{% endblock %}
+{% block title %}Dodaj produkt{% endblock %}
 {% block extracss %}{% endblock %}
 
-{% load widget_tweaks %} 
+{% load crispy_forms_tags %}
 {% block content %}
 <h1 class="h3 mb-2 text-gray-800">Dodaj produkt</h1>
 <div class="card shadow mb-4">
@@ -11,39 +11,21 @@
         <h6 class="m-0 font-weight-bold text-primary">Dodaj produkt</h6>
     </div>
     <div class="card-body">
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="container register-form">
-        <div class="form">
-            <div class="form-content">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Nazwa produktu</label> {% render_field productForm.name class="form-control" placeholder="Nazwa" %}
-                        </div>
-                        <div class="form-group">
-                            <label for="">Krótki opis</label> {% render_field productForm.description class="form-control" placeholder="Opis" %}
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Cena</label> {% render_field productForm.price class="form-control" placeholder="52" %}
-                        </div>
-                        <div class="form-group">
-                            <label for="">Zdjęcie produktu</label> {% render_field productForm.product_image class="form-control" placeholder="product_image" %}
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btnSubmit">Dodaj</button>
-                </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ productForm|crispy }}
+            </fieldset>
+    
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Potwierdz</button>
             </div>
-        </div>
+        </form>
     </div>
-</form>
-</div>
 </div>
 {% endblock content %}
 {% block script %}
 {% endblock script %}
+
+{% block sklep_zarzadzaj %}active{% endblock sklep_zarzadzaj %}
+{% block sklep_zarzadzaj1 %}show{% endblock sklep_zarzadzaj1 %}

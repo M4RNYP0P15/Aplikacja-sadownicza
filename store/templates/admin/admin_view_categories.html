@@ -1,0 +1,55 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+{% block title %}Lista kategorii{% endblock %}
+{% block extracss %}
+<link href="{% static 'admin/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">Lista kategorii</h1>
+<p class="mb-4">W tym miejscu możesz zarządzać kategoriami.</p>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Lista kategorii</h6>
+  </div>
+  <div class="card-body">
+      <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable">
+              <thead>
+                <tr>
+                  <th>Tytuł</th>
+                  <th>Podtytuł</th>
+                  <th>Rodzic</th>
+                  <th>Akcje</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for c in elements %}
+                <tr>
+                  <td> {{c.title}}</td>
+                  <td>{{c.subtitle}}</td>
+                  <td>{{c.parent}}</td>
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'store:update-category' c.id  %}"><i class="fas fa-edit"></i></a>
+                  <a class="btn btn-danger btn-xs" href="{% url 'store:delete-category' c.id  %}"><i class="fas fa-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Tytuł</th>
+                  <th>Podtytuł</th>
+                  <th>Rodzic</th>
+                  <th>Akcje</th>
+                </tr>
+              </tfoot>
+          </table>
+      </div>
+  </div>
+</div>
+{% endblock content %}
+{% block script %}
+    <script src="{% static 'admin/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <script src="{% static 'admin/js/demo/datatables-demo.js' %}"></script>
+{% endblock script %}

@@ -33,7 +33,7 @@ cd (folder)
 python3 -m venv venv
 ```
 ```
-source env/bin/activate
+source venv/bin/activate
 ```
 ```
 pip install -r requirements.txt

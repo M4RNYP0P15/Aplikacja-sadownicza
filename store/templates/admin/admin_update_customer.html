@@ -1,14 +1,14 @@
 {% extends 'admin/base_admin.html' %}
 {% load static %}
-{% block title %}404{% endblock %}
+{% block title %}Modyfikuj{% endblock %}
 {% block extracss %}{% endblock %}
 
 {% load crispy_forms_tags %}
 {% block content %}
-<h1 class="h3 mb-2 text-gray-800">Dodaj produkt</h1>
+<h1 class="h3 mb-2 text-gray-800">Modyfikuj klienta</h1>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Dodaj produkt</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Modyfikuj klienta</h6>
     </div>
     <div class="card-body">
     <form method="POST" enctype="multipart/form-data">
@@ -25,3 +25,6 @@
 </div>
 </div>
 {% endblock content %}
+
+{% block sklep_zarzadzaj %}active{% endblock sklep_zarzadzaj %}
+{% block sklep_zarzadzaj1 %}show{% endblock sklep_zarzadzaj1 %}

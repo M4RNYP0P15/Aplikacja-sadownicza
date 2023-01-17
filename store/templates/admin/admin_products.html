@@ -13,7 +13,7 @@
   </div>
   <div class="card-body">
       <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="dataTable">
               <thead>
                 <tr>
                   <th>Nazwa</th>
@@ -23,6 +23,22 @@
                   <th>Akcje</th>
                 </tr>
               </thead>
+              <tbody>
+                {% for p in products %}
+                {% if p %}
+                <tr>
+                  <td>{{p.name}}</td>
+                  <td><img src="{{ p.image.url }}" alt="Zdjecie" height="40" width="40"></td>
+                  <td>{{p.price}}</td>
+                  <td>{{p.description}}</td>
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'store:update-product' p.id  %}"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-danger btn-xs" href="{% url 'store:delete-product' p.id  %}"><i class="fas fa-trash"></i></a></td>
+                </tr>
+                {%else%}
+                <h1>Brak produktów!</h1>
+                {% endif %}
+                {% endfor %}
+              </tbody>
               <tfoot>
                 <tr>
                   <th>Nazwa</th>
@@ -32,26 +48,9 @@
                   <th>Akcje</th>
                 </tr>
               </tfoot>
-              <tbody>
-                {% for p in products %}
-                {% if p %}
-                <tr>
-                  <td> {{p.name}}</td>
-                  <td> <img src="{{ p.product_image.url }}" alt="Profile Pic" height="40px" width="40px" /></td>
-                  <td>{{p.price}}</td>
-                  <td>{{p.description}}</td>
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'update-product' p.id  %}"><i class="fas fa-edit"></span></a>
-                    <a class="btn btn-danger btn-xs" href="{% url 'delete-product' p.id  %}"><i class="fas fa-trash"></span></a></td>
-                </tr>
-                {%else%}
-                <h1>Brak produktów!</h1>
-                {% endif %}
-                {% endfor %}
-              </tbody>
           </table>
       </div>
   </div>
-  <a href="/admin-add-product" class="float"><i class="fa fa-plus"></i></a>
 </div>
 {% endblock content %}
 
@@ -61,3 +60,6 @@
 
     <script src="{% static 'admin/js/demo/datatables-demo.js' %}"></script>
 {% endblock script %}
+
+{% block sklep_zarzadzaj %}active{% endblock sklep_zarzadzaj %}
+{% block sklep_zarzadzaj1 %}show{% endblock sklep_zarzadzaj1 %}

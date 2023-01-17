@@ -21,7 +21,9 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("calendar/", include("my_calendar.urls")),
+    path('articles/', include('dictionary.urls')),
     path('', include('store.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -41,13 +41,36 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store',
     'my_calendar',
+    'dictionary',
     #'store.apps.StoreConfig',
     'widget_tweaks',
     'crispy_forms',
     'captcha',
+    'tinymce',
 ]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
+
+TINYMCE_DEFAULT_CONFIG = {
+    'custom_undo_redo_levels': 100,
+    'selector': 'textarea',
+    "menubar": "file edit view insert format tools table help",
+    'plugins': 'link image preview codesample contextmenu table code lists fullscreen',
+    'toolbar1': 'undo redo | backcolor casechange permanentpen formatpainter removeformat formatselect fontselect fontsizeselect',
+    'toolbar2': 'bold italic underline blockquote | alignleft aligncenter alignright alignjustify '
+               '| bullist numlist | outdent indent | table | link image | codesample | preview code | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry',
+    'contextmenu': 'formats | link image',
+    'block_formats': 'Paragraph=p; Header 1=h1; Header 2=h2',
+    'fontsize_formats': "8pt 10pt 12pt 14pt 16pt 18pt",
+    'content_style': "body { font-family: Arial; background: white; color: black; font-size: 12pt}",
+    'codesample_languages': [
+        {'text': 'Python', 'value': 'python'}, {'text': 'HTML/XML', 'value': 'markup'},],
+    'image_class_list': [{'title': 'Fluid', 'value': 'img-fluid', 'style': {} }],
+    'width': 'auto',
+    "height": "600px",
+    'image_caption': True,
+}
+
 
 AUTH_USER_MODEL = 'store.Customer'
 

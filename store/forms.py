@@ -44,8 +44,15 @@ class CustomerUserForm(forms.ModelForm):
             'username', 
             'profile_pic', 
             'address',
-            'phone'
+            'phone',
+            'status'
             ]
+        labels = {
+            'phone': 'Nr. telefonu',
+            'address' : 'Adres',
+            'status': 'Ranga',
+            'profile_pic': 'Zdjęcie użytkownika'
+        }
 
 class SetPasswordForm(SetPasswordForm):
     class Meta:
@@ -73,12 +80,6 @@ class UserRegistrationForm(UserCreationForm):
 
         return user
 
-class ProductForm(forms.ModelForm):
-    class Meta:
-        model=product.Products
-        fields=['name','price','description','image']
-
-#address of shipment
 class AddressForm(forms.Form):
     Email = forms.EmailField()
     Mobile= forms.IntegerField()
@@ -94,8 +95,29 @@ class OrderForm(forms.ModelForm):
         model=orders.Order
         fields=['status']
 
-#for contact us page
 class ContactusForm(forms.Form):
     Name = forms.CharField(max_length=30)
     Email = forms.EmailField()
     Message = forms.CharField(max_length=500,widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model=product.Products
+        fields=['name', 'category','price','description','image']
+        labels = {
+            'name': 'Nazwa',
+            'category':'Kategoria',
+            'price' : 'Cena',
+            'description': 'Opis',
+            'image': 'Zdjęcie',
+        }
+
+class AddCategory(forms.ModelForm):
+    class Meta:
+        model= category.Category
+        fields=['title', 'subtitle', 'parent']
+        labels = {
+            'title': 'Nazwa',
+            'subtitle' : 'Opis',
+            'parent': 'Kategoria nadrzędna',
+        }

@@ -1,12 +1,13 @@
 # from django.db import models
-from ..models import customer, product, orders
+from ..models import customer, product, orders, category
 # from django.contrib.auth.models import User
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from ..decorators import user_is_superuser
+from ..decorators import user_is_superuser, user_is_moderator
 from .. import forms
+from django.contrib import messages
 
 
 # @login_required(login_url='adminlogin')
@@ -83,6 +84,9 @@ def admin_add_product_view(request):
         productForm=forms.ProductForm(request.POST, request.FILES)
         if productForm.is_valid():
             productForm.save()
+        else:
+            for error in list(productForm.errors.values()):
+                messages.error(request, error)
         return HttpResponseRedirect('admin-products')
     return render(request,'admin/admin_add_products.html',{'productForm':productForm})
 
@@ -147,3 +151,40 @@ def update_order_view(request,pk):
 # def view_feedback_view(request):
 #     feedbacks=models.Feedback.objects.all().order_by('-id')
 #     return render(request,'admin/view_feedback.html',{'feedbacks':feedbacks})
+
+
+@user_is_superuser
+def admin_add_category(request):
+    categoryForm = forms.AddCategory()
+    if request.method=='POST':
+        categoryForm=forms.AddCategory(request.POST)
+        if categoryForm.is_valid():
+            categoryForm.save()
+        else:
+            for error in list(categoryForm.errors.values()):
+                messages.error(request, error)
+        return HttpResponseRedirect('admin-add-category')
+    return render(request,'admin/admin_add_category.html',{'categoryForm':categoryForm})
+
+@user_is_superuser
+def admin_category_view(request):
+    elements=category.Category.objects.all()
+    return render(request,'admin/admin_view_categories.html',{'elements':elements})
+
+@user_is_superuser
+def update_category_view(request,pk):
+    _category=category.Category.objects.get(id=pk)
+    if request.method=='POST':
+        form=forms.AddCategory(request.POST, instance=_category)
+        if form.is_valid():
+            form.save()
+            return redirect('store:admin-view-category')
+
+    form=forms.AddCategory(instance=_category)
+    return render(request,'admin/admin_update_category.html',context={'form':form})
+
+@user_is_superuser
+def delete_category_view(request,pk):
+    _category=category.Category.objects.get(id=pk)
+    _category.delete()
+    return redirect('store:admin-view-category')
