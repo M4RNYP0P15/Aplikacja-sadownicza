@@ -169,11 +169,9 @@
                 <li class="col-md-4">
                     <figure class="itemside mb-3">
                         {%for product in products%}
-                        <div class="aside"><img src="{% static product.product_image.url %}" class="img-sm border"></div>
+                        <div class="aside"><img src="{{ product.image.url }}" class="img-sm border"></div>
                         <figcaption class="info align-self-center">
-
-                            <p class="title"><strong>Name : </strong>{{product.name}} <br> <strong>Description : </strong>{{product.description}} <br> <strong>Price : </strong>${{product.price}}</p>
-
+                            <p class="title"><strong>Produkt : </strong>{{product.name}} <br> <strong>Opis : </strong>{{product.description}} <br> <strong>Cena : </strong>{{product.price}} PLN</p>
                         </figcaption>
 
                     </figure>
@@ -182,11 +180,11 @@
                     <div class="col"> <strong>Adres dostawy:</strong> <br> {{order.address}}</div>
                 </li>
                 <li class="col-md-4">
-                    <div class="col"> <strong>Status:</strong> <br> {% if order.status == 'Pending'%}
+                    <div class="col"> <strong>Status:</strong> <br> {% if order.status == 'Oczekujące'%}
                         <td> <span class="label label-info" style="font-size: 12px; border-radius: 30px;">{{order.status}}</span></td>
-                        {% elif order.status == 'Delivered' %}
+                        {% elif order.status == 'Dostarczone' %}
                         <td> <span class="label label-success" style="font-size: 12px; border-radius: 30px;">{{order.status}}</span></td>
-                        {% elif order.status == 'Out for Delivery' %}
+                        {% elif order.status == 'Do dostarczenia' %}
                         <td> <span class="label label-default" style="font-size: 12px; border-radius: 30px;">{{order.status}}</span></td>
                         {%else%}
                         <td> <span class="label label-primary" style="font-size: 12px; border-radius: 30px;">{{order.status}}</span></td>
@@ -194,33 +192,33 @@
 
 
                     </div> <br>
-                    <a class="btn btn-primary btn-sm rounded-0" style="text-decoration:none;" href="{% url 'download-invoice' order.id product.id  %}" target="_blank"><i class="fa fa-download " style="font-size: 12px;height:auto"></i> Download Invoice</a>
+                    <a class="btn btn-primary btn-sm rounded-0" style="text-decoration:none;" href="{% url 'store:download-invoice' order.id product.id  %}" target="_blank"><i class="fa fa-download " style="font-size: 12px;height:auto"></i> Pobierz fakturę</a>
                 </li>
                 {%endfor%}
             </ul>
             <hr>
 
             <div class="track">
-                {%if order.status == 'Pending' %}
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Order Pending</span> </div>
-                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text"> Order Confirmed</span> </div>
-                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i> </span> <span class="text">Delivered</span> </div>
-                {%elif order.status == 'Order Confirmed' %}
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Order Pending</span> </div>
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text"> Order Confirmed</span> </div>
-                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i> </span> <span class="text">Delivered</span> </div>
-                {%elif order.status == 'Out for Delivery'%}
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Order Pending</span> </div>
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text"> Order Confirmed</span> </div>
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i> </span> <span class="text">Delivered</span> </div>
+                {%if order.status == 'Oczekujące' %}
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Oczekujące</span> </div>
+                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text">Zamówienie potwierdzone</span> </div>
+                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i> </span> <span class="text">W drodze</span> </div>
+                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i> </span> <span class="text">Dostarczono</span> </div>
+                {%elif order.status == 'Zamówienie potwierdzone' %}
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Oczekujące</span> </div>
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text">Zamówienie potwierdzone</span> </div>
+                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i></span> <span class="text">W drodze</span> </div>
+                <div class="step "> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i></span> <span class="text">Dostarczono</span> </div>
+                {%elif order.status == 'Do dostarczenia'%}
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Oczekujące</span> </div>
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text">Zamówienie potwierdzone</span> </div>
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i> </span> <span class="text">W drodze</span> </div>
+                <div class="step ">       <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i> </span> <span class="text">Dostarczono</span> </div>
                 {%else%}
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Order Pending</span> </div>
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text"> Order Confirmed</span> </div>
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i> </span> <span class="text">Delivered</span> </div>
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-spinner"></i> </span> <span class="text">Oczekujące</span> </div>
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-check"></i> </span> <span class="text">Zamówienie potwierdzone</span> </div>
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-truck"></i> </span> <span class="text">W drodze</span> </div>
+                <div class="step active"> <span class="icon"> <i style="padding-top:.2em; padding-right:.5em;" class="fa fa-home"></i> </span> <span class="text">Dostarczono</span> </div>
                 {%endif%}
             </div>
 

@@ -92,7 +92,7 @@ def admin_dashboard_view(request):
     return render(request,'admin/admin_dashboard.html',context=mydict)
 
 # login_required(login_url='adminlogin')
-@user_is_superuser
+@user_is_moderator
 def view_customer_view(request):
     customers=customer.Customer.objects.all()
     return render(request,'admin/view_customer.html',{'customers':customers})
@@ -124,17 +124,12 @@ def update_customer_view(request,pk):
     
     return render(request,'admin/admin_update_customer.html',context={'form':form})
 
-# admin view the product
-# @login_required(login_url='adminlogin')
-@user_is_superuser
+@user_is_moderator
 def admin_products_view(request):
     products=product.Products.objects.all()
     return render(request,'admin/admin_products.html',{'products':products})
 
-
-# admin add product by clicking on floating button
-# @login_required(login_url='adminlogin')
-@user_is_superuser
+@user_is_moderator
 def admin_add_product_view(request):
     productForm=forms.ProductForm()
     if request.method=='POST':
@@ -170,7 +165,7 @@ def update_product_view(request,pk):
 
 
 # @login_required(login_url='adminlogin')
-@user_is_superuser
+@user_is_moderator
 def admin_view_booking_view(request):
     _orders=orders.Order.objects.all()
     ordered_products=[]
@@ -188,11 +183,9 @@ def admin_view_booking_view(request):
 def delete_order_view(request,pk):
     order=orders.Order.objects.get(id=pk)
     order.delete()
-    return redirect('admin-view-booking')
+    return redirect('store:admin-view-booking')
 
-# for changing status of order (pending,delivered...)
-# @login_required(login_url='adminlogin')
-@user_is_superuser
+@user_is_moderator
 def update_order_view(request,pk):
     order=orders.Order.objects.get(id=pk)
     orderForm=forms.OrderForm(instance=order)
@@ -200,8 +193,8 @@ def update_order_view(request,pk):
         orderForm=forms.OrderForm(request.POST,instance=order)
         if orderForm.is_valid():
             orderForm.save()
-            return redirect('admin-view-booking')
-    return render(request,'admin/update_order.html',{'orderForm':orderForm})
+            return redirect('store:admin-view-booking')
+    return render(request,'admin/admin_update_order.html',{'form':orderForm})
 
 
 # @login_required(login_url='adminlogin')
@@ -223,7 +216,7 @@ def admin_add_category(request):
         return HttpResponseRedirect('admin-add-category')
     return render(request,'admin/admin_add_category.html',{'categoryForm':categoryForm})
 
-@user_is_superuser
+@user_is_moderator
 def admin_category_view(request):
     elements=category.Category.objects.all()
     return render(request,'admin/admin_view_categories.html',{'elements':elements})

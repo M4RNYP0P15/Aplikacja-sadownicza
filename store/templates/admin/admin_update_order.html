@@ -1,0 +1,32 @@
+{% extends 'admin/base_admin.html' %}
+{% load static %}
+{% block title %}Modyfikuj zamówienie{% endblock %}
+{% block extracss %}{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">Modyfikuj zamówienie</h1>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Modyfikuj zamówienie</h6>
+  </div>
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{ form|crispy }}
+        </fieldset>
+
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Potwierdz</button>
+        </div>
+    </form>
+</div>
+</div>
+{% endblock content %}
+{% block script %}
+{% endblock script %}
+
+{% block sklep_zarzadzaj %}active{% endblock sklep_zarzadzaj %}
+{% block sklep_zarzadzaj1 %}show{% endblock sklep_zarzadzaj1 %}

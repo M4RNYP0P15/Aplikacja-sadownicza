@@ -92,60 +92,6 @@
       </div>
   </div>
 </div>
-
-<div class="container">
-    <div class="panel panel-primary" >
-      <div class="panel-heading" style="text-align:center;">
-        <h6 class="panel-title">Ostatnie zamówienia</h6>
-      </div>
-      <table class="table table-hover table-bordered" id="dev-table">
-        <thead>
-          <tr>
-            <th>Nabywca</th>
-            <th>Numer telefonu</th>
-            <th>Adres dostawy</th>
-            <th>Produkt</th>
-            <th>Zdjęcie</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        {% for product,customer,order in data %}
-        <tr>
-          {% for c in customer %}
-          <td> {{c.get_name}}</td>
-          <td>{{c.mobile}}</td>
-          <td>{{order.address}}</td>
-          {% endfor %}
-          {% for p in product %}
-          <td> {{p.name}}</td>
-          <td> <img src="{{ p.product_image.url }}" alt="Zdjęcie" height="40" width="40"></td>
-
-          {% if order.status == 'Oczekujące'%}
-          <td> <span class="label label-info">{{order.status}}</span></td>
-          {% elif order.status == 'Dostarczone' %}
-          <td> <span class="label label-success">{{order.status}}</span></td>
-          {% elif order.status == 'Do dostarczenia' %}
-          <td> <span class="label label-warning">{{order.status}}</span></td>
-          {%else%}
-            <td> <span class="label label-primary">{{order.status}}</span></td>
-          {%endif%}
-          {% endfor %}
-        </tr>
-        {% endfor %}
-        <tfoot>
-          <tr>
-            <th>Nabywca</th>
-            <th>Numer telefonu</th>
-            <th>Adres dostawy</th>
-            <th>Produkt</th>
-            <th>Zdjęcie</th>
-            <th>Status</th>
-          </tr>
-        </tfoot>
-      </table>
-  </div>
-</div>
-
 {% endblock content %}
 {% block script %}
     <script src="{% static 'admin/vendor/chart.js/Chart.min.js' %}"></script>

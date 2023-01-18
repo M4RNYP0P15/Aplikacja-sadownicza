@@ -39,10 +39,10 @@
                 {% endfor %}
                 {% for p in product %}
                   <td>{{p.name}}</td>
-                  <td><img src="{% static p.product_image.url %}" alt="Profile Pic" height="40" width="40"></td>
+                  <td><img src="{{ p.image.url }}" alt="Profile Pic" height="40" width="40"></td>
                   <td>{{order.status}}</td>
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'update-order' order.id  %}"><i class="fas fa-edit"></i></a>
-                  <a class="btn btn-danger btn-xs" href="{% url 'delete-order' order.id  %}"><i class="fas fa-trash"></i></a></td>
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'store:update-order' order.id  %}"><i class="fas fa-edit"></i></a>
+                  <a class="btn btn-danger btn-xs" href="{% url 'store:delete-order' order.id  %}"><i class="fas fa-trash"></i></a></td>
                 {% endfor %}
                 </tr>
                 {% endfor %}

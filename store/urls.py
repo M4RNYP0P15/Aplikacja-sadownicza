@@ -7,7 +7,7 @@ from .views.signup import customer_signup_view
 from .views.login import afterlogin_view, custom_login, custom_logout
 from .views.cart import cart_view, add_to_cart_view, customer_address_view, payment_success_view, remove_from_cart_view
 from .views.checkout import CheckOut
-from .views.orders import my_order_view
+from .views.orders import my_order_view, download_invoice_view
 from .views.password_back import password_change, password_reset_request, passwordResetConfirm, activate
 # from .middleware.auth import auth_middleware
 # from django.contrib.auth.views import LogoutView, LoginView
@@ -72,4 +72,5 @@ urlpatterns = [
 
     path('search', search_view,name='search'),
     path('customer-home', customer_home_view,name='customer-home'),
+    path('download-invoice/<int:orderID>/<int:productID>', download_invoice_view,name='download-invoice'),
 ]

@@ -27,8 +27,8 @@
                     <td><img height="40" width="40" class="rounded-circle" src="{{product.image.url}}" alt="zdjecie"></td>
                     <td>{{product.name}}</td>
                     <td>{{product.price|currency}}</td>
-                    <td>1</td>
-                    <td>{{product.price|currency}}</td>
+                    <td>{{product|cart_quantity:request.session.cart}}</td>
+                    <td>{{product|price_total:request.session.cart|currency}}</td>
                     <td><a class="btn btn-danger btn-xs" href="{% url 'store:remove-from-cart' product.id  %}?next_page={{request.path}}"><i class="fas fa-trash"></i></a></td>
                 </tr>
                 {%else%}
@@ -41,7 +41,7 @@
                 <tr>
                     <th colspan="5"></th>
                     <th class="" >Do zapłaty</th>
-                    <th>{{total}} PLN</th>
+                    <th>{{products|total_cart_price:request.session.cart|currency}} {{total}}</th>
                 </tr>
             </tfoot>
         </table>

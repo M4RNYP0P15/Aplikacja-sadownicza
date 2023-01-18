@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'captcha',
     'tinymce',
     'django_filters',
+    'xhtml2pdf',
 ]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
