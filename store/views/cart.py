@@ -35,7 +35,6 @@ def cart_view(request):
 def add_to_cart_view(request,pk):
     products=Products.objects.all()
 
-    #for cart counter, fetching products ids added by customer from cookies
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
         counter=product_ids.split('|')

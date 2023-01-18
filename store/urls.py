@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views.home import Index, store, customer_home_view
+from .views.home import store, customer_home_view
 # from .views.signup import Signup
 from .views.signup import customer_signup_view
 # from .views.login import Login, logout, afterlogin_view
@@ -17,7 +17,7 @@ from .views.admin_dashboard import admin_dashboard_view, admin_add_product_view,
 app_name = "store"
 
 urlpatterns = [
-    path('', Index.as_view(), name='homepage'),
+    path('', store, name='homepage'),
     path('store', store, name='store'),
 
 
@@ -34,7 +34,6 @@ urlpatterns = [
     path('reset/<uidb64>/<token>', passwordResetConfirm, name='password_reset_confirm'),
 
     path("activate/<uidb64>/<token>", activate, name='activate'),
-    # path('customer-home', customer_home_view,name='customer-home'),
     
     
     # Panel zarządzania

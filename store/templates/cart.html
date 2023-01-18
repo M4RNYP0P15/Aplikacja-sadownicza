@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% load cart %}
-{% load custom_filter %}
+
 <div class="container">
    <div class="border rounded p-1 m-1">
         <p class="display-4 pl-2 ml-2 rounded-pill">Twój Koszyk</p>
@@ -26,9 +25,9 @@
                     <td>{{forloop.counter}}</td>
                     <td><img height="40" width="40" class="rounded-circle" src="{{product.image.url}}" alt="zdjecie"></td>
                     <td>{{product.name}}</td>
-                    <td>{{product.price|currency}}</td>
+                    <td>{{product.price}} PLN</td>
                     <td>1</td>
-                    <td>{{product.price|currency}}</td>
+                    <td>{{product.price}} PLN</td>
                     <td><a class="btn btn-danger btn-xs" href="{% url 'store:remove-from-cart' product.id  %}?next_page={{request.path}}"><i class="fas fa-trash"></i></a></td>
                 </tr>
                 {%else%}

@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{% load cart %}
-{% load custom_filter %}
+{% if redirect_to %}
+<script>
+  location.replace("{{redirect_to}}")
+</script>
+{% endif %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/store.css' %}">
 <div class="container-fluid mt-3">
 	<div class="container">
 		<div class="row">
@@ -10,13 +14,10 @@
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/">Sklep</a></li>
-					{% for category in data.hist_category %}
+						{% for category in data.hist_category %}
 						{% if category %}
-
-							<li class="breadcrumb-item {% if category.id == data.cur_category|add:'0' %} active{% endif %}" >{% if category.pk != data.cur_category|add:'0' %}<a href="/?category={{category.id}}" >{{category.title}}</a>{% else %}{{category.title}}{% endif %}</li>
-
-						{% endif %}
-					{% endfor %}
+						<li class="breadcrumb-item {% if category.id == data.cur_category|add:'0' %} active{% endif %}">{% if category.pk != data.cur_category|add:'0' %}<a	href="/?category={{category.id}}">{{category.title}}</a>{% else %}{{category.title}}{% endif %}</li>{% endif %}
+						{% endfor %}
 					</ol>
 				</nav>
 			</div>
@@ -25,84 +26,81 @@
 	<div class="row">
 		<div class="col-lg-3 mx-auto">
 			<div class="card card-body">
-				<form  action="/search" method="get">
+				<form action="/search" method="get">
 					<div class="row">
-						<input class="navbar-input col-lg-9 form-control" value="{% if search_text %}{{ search_text }}{% endif %}" type="search" placeholder="Szukaj produktów" name="query" id="query">
-					  <button class="navbar-button col-lg-auto" type="submit"><i class="fas fa-search"></i></button>
+						<div class="input-group mb-2">
+							<input type="search" class="form-control" name="query" id="query" value="{% if search_text %}{{ search_text }}{% endif %}" placeholder="Szukaj produktów">
+							<div class="input-group-append">
+							  <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+							</div>
+						  </div>
 					</div>
-				  </form>
+				</form>
 			</div>
 
 			<div class="card card-body">
 				<div class="card-title">Kategoria</div>
 				<div class="list-group">
 					<a href="/" class="list-group-item list-group-item-action btn btn-outline-success">Wszystkie produkty</a>
-
 					{% for category in data.categories %}
-						{% if data.cur_category != Null %}
-							{% if category.parent.id == data.cur_category|add:"0" %}
-						<a href="/?category={{category.id}}" class="list-group-item list-group-item-action btn btn-outline-success ">{{category.title}}</a>
-							{% endif %}
-
-						{% else %}
-
-							{% if category.parent == Null %}
-						<a href="/?category={{category.id}}" class="list-group-item list-group-item-action btn btn-outline-success ">{{category.title}}</a>
-							{% endif %}
-
-						{% endif %}
+					{% if data.cur_category != Null %}{% if category.parent.id == data.cur_category|add:"0" %}
+					<a href="/?category={{category.id}}" class="list-group-item list-group-item-action btn btn-outline-success ">{{category.title}}</a>
+					{% endif %}
+					{% else %}
+					{% if category.parent == Null %}
+					<a href="/?category={{category.id}}" class="list-group-item list-group-item-action btn btn-outline-success ">{{category.title}}</a>
+					{% endif %}{% endif %}
 					{% endfor %}
 				</div>
 			</div>
-
-			<div class="card card-body">
+			<!-- <div class="card card-body">
 				<div class="card-title">Przedział ceny</div>
 				<div id="slider-range" class="slider"></div>
 				<div class="slider-info">
 					<span id="slider-range-amount"></span>
 				</div>
-			</div>
+			</div> -->
 		</div>
 
 		<div id='products' class="col-lg-9 mx-auto">
 			<div class="row mx-auto">
-				{% for product in data.page_obj %}
-				<div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
-					<img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
-					<div class="card-body">
-						<p class="card-title">{{product.name}}</p>
-						<p class="card-text"><b>{{product.price|currency}}</b></p>
-						<!-- {{product | is_in_cart:request.session.cart }} -->
-					</div>
 
-					<div class="card-footer p-0 no-gutters">
+				{% if data.page_obj %}
+				{% for p in data.page_obj %}
+				<div class="mx-auto mb-3">
+					<div class="container page-wrapper">
+						<div class="page-inner">
+							<div class="row">
+								<div class="el-wrapper">
+									<div class="box-up">
+										<img class="img" src="{{ p.image.url }}" alt="product pic" height="300" width="300">
+										<div class="img-info">
+											<div class="info-inner bg-dark text-white">
+												<div class="bg-gray-900 p-company">{{p.name}}</div>
+											</div>
+											<div class="a-size">{{p.description}}</div>
+										</div>
+									</div>
 
-						{% if product|is_in_cart:request.session.cart %}
-						<div class="row no-gutters">
-							<form action="/#{{product.id}}" class="col-2 " method="post">
-								{% csrf_token %}
-								<input hidden type="text" name='product' value='{{product.id}}'>
-								<input hidden type="text" name='remove' value='True'>
-								<input type="submit" value=" - " class="btn btn-block btn-success border-right">
-							</form>
-							<div class="text-center col btn btn-success">{{product|cart_quantity:request.session.cart}} w Koszyku</div>
-							<form action="/#{{product.id}}" class="col-2 " method="post">
-								{% csrf_token %}
-								<input hidden type="text" name='product' value='{{product.id}}'>
-								<input type="submit" value=" + " class="btn btn-block btn-success border-left">
-							</form>
+									<div class="box-down">
+										<div class="h-bg">
+											<div class="h-bg-inner"></div>
+										</div>
+
+										<a class="cart" href="{% url 'store:add-to-cart' p.id  %}?next_page={{ request.path }}">
+											<span class="price">{{p.price}} PLN </span>
+											<span class="add-to-cart">
+												<span class="txt"> Dodaj do <i class="fa fa-shopping-cart"></i></span>
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
 						</div>
-						{% else %}
-						<form action="/#{{product.id}}" method="POST" class="btn-block">
-							{% csrf_token %}
-							<input hidden type="text" name='product' value='{{product.id}}'>
-							<input type="submit" class="float-right btn btn-success form-control"
-								value="Dodaj do koszyka">
-						</form>
-						{% endif %}
 					</div>
 				</div>
 				{% endfor %}
+				{% endif %}
 			</div>
 			{% include 'pagination.html' %}
 		</div>

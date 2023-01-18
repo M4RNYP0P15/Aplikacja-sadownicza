@@ -5,36 +5,37 @@ from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-class Index(View):
+# class Index(View):
 
-	def post(self, request):
-		product = request.POST.get('product')
-		remove = request.POST.get('remove')
-		cart = request.session.get('cart')
-		if cart:
-			quantity = cart.get(product)
-			if quantity:
-				if remove:
-					if quantity <= 1:
-						cart.pop(product)
-					else:
-						cart[product] = quantity-1
-				else:
-					cart[product] = quantity+1
+# 	def post(self, request):
+# 		return HttpResponseRedirect(f'/store{request.get_full_path()[1:]}')
+# 		# product = request.POST.get('product')
+# 		# remove = request.POST.get('remove')
+# 		# cart = request.session.get('cart')
+# 		# if cart:
+# 		# 	quantity = cart.get(product)
+# 		# 	if quantity:
+# 		# 		if remove:
+# 		# 			if quantity <= 1:
+# 		# 				cart.pop(product)
+# 		# 			else:
+# 		# 				cart[product] = quantity-1
+# 		# 		else:
+# 		# 			cart[product] = quantity+1
 
-			else:
-				cart[product] = 1
-		else:
-			cart = {}
-			cart[product] = 1
+# 		# 	else:
+# 		# 		cart[product] = 1
+# 		# else:
+# 		# 	cart = {}
+# 		# 	cart[product] = 1
 
-		request.session['cart'] = cart
-		print('cart', request.session['cart'])
-		return redirect('store:homepage')
+# 		# request.session['cart'] = cart
+# 		# print('cart', request.session['cart'])
+# 		# return redirect('store:homepage')
 
-	def get(self, request):
-		# print()
-		return HttpResponseRedirect(f'/store{request.get_full_path()[1:]}')
+# 	def get(self, request):
+# 		# print()
+# 		return HttpResponseRedirect(f'/store{request.get_full_path()[1:]}')
 
 
 def home_view(request):
@@ -96,7 +97,7 @@ def store(request):
 		product_count_in_cart=0
 	
 	page_num = request.GET.get('page')
-	paginator = Paginator(products, 10)
+	paginator = Paginator(products, 2)
 	try:
 		page_obj = paginator.page(page_num)
 	except PageNotAnInteger:
@@ -109,4 +110,4 @@ def store(request):
 	data['categories'] = categories
 	data['cur_category'] = categoryID
 	data['hist_category'] = temp_hierarch
-	return render(request,'index.html',{'data':data,'product_count_cart':product_count_in_cart})
+	return render(request,'index.html',{'data':data,'product_count_in_cart':product_count_in_cart})

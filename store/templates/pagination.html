@@ -1,13 +1,9 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
     {% if data.page_obj.has_previous %}
-        <li class="page-item">
-        <a class="page-link" href="?page={{ data.previous_page_number }}">Previous</a>
-      </li>
+        <li class="page-item"><a class="page-link" href="?page={{ data.previous_page_number }}">Poprzedni</a></li>
     {% else %}
-        <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
-      </li>
+        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Poprzedni</a></li>
     {% endif %}
 
     {% if data.page_obj.number|add:'-4' > 1 %}
@@ -16,12 +12,7 @@
 
     {% for i in data.page_obj.paginator.page_range %}
         {% if data.page_obj.number == i %}
-            <li class="page-item active" aria-current="page">
-          <span class="page-link">
-            {{ i }}
-            <span class="sr-only">(current)</span>
-          </span>
-        </li>
+            <li class="page-item active" aria-current="page"><span class="page-link">{{ i }}<span class="sr-only">(current)</span></span></li>
         {% elif i > data.page_obj.number|add:'-5' and i < data.page_obj.number|add:'5' %}
              <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
         {% endif %}
@@ -32,13 +23,9 @@
     {% endif %}
 
     {% if data.page_obj.has_next %}
-        <li class="page-item">
-        <a class="page-link" href="?page={{ data.page_obj.next_page_number }}">Next</a>
-      </li>
+        <li class="page-item"><a class="page-link" href="?page={{ data.page_obj.next_page_number }}">Następny</a></li>
     {% else %}
-        <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
-      </li>
+        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" >Następny</a></li>
     {% endif %}
   </ul>
 </nav>
