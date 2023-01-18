@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views.home import Index, store
+from .views.home import Index, store, customer_home_view
 # from .views.signup import Signup
 from .views.signup import customer_signup_view
 # from .views.login import Login, logout, afterlogin_view
@@ -12,6 +12,7 @@ from .views.password_back import password_change, password_reset_request, passwo
 # from .middleware.auth import auth_middleware
 # from django.contrib.auth.views import LogoutView, LoginView
 from .views.profile import profile
+from .views.searching import search_view
 from .views.admin_dashboard import admin_dashboard_view, admin_add_product_view, admin_products_view, admin_view_booking_view, view_customer_view, delete_order_view, update_order_view, delete_product_view, update_product_view, delete_customer_view, update_customer_view, admin_add_category, admin_category_view, delete_category_view, update_category_view
 app_name = "store"
 
@@ -38,7 +39,7 @@ urlpatterns = [
     
     # Panel zarządzania
     path('admin-dashboard', admin_dashboard_view,name='admin-dashboard'),
-    
+
     path('view-customer', view_customer_view,name='view-customer'),
     path('update-customer/<int:pk>', update_customer_view,name='update-customer'),
     path('delete-customer/<int:pk>', delete_customer_view,name='delete-customer'),
@@ -68,4 +69,7 @@ urlpatterns = [
     
     path('check-out', CheckOut.as_view(), name='checkout'),
     path('orders', my_order_view, name='orders'),
+
+    path('search', search_view,name='search'),
+    path('customer-home', customer_home_view,name='customer-home'),
 ]

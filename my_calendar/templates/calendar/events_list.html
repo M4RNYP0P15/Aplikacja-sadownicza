@@ -22,20 +22,18 @@
                 <div class="table-responsive">
                     <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                         <div class="row">
-                            <div class="col-sm-12">
-                                <table class="table table-hover table-bordered dataTable no-footer" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <div class="col-sm-11">
+                                <table class="table table-hover table-bordered dataTable no-footer" id="sampleTable" role="grid">
                                     <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 261.641px;">SL</th>
-                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 417.312px;">Tytuł wydarzenia</th>
-                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 189.281px;">Czas rozpoczęcia</th>
-                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 102.141px;">Czas zakończenia</th>
+                                        <tr >
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1">Tytuł wydarzenia</th>
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1">Czas rozpoczęcia</th>
+                                            <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1">Czas zakończenia</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for event in object_list %}
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1">{{ forloop.counter }}</td>
+                                            <tr class="odd">
                                                 <td>{{ event.title }}</td>
                                                 <td>{{ event.start_time }}</td>
                                                 <td>{{ event.end_time }}</td>
@@ -55,7 +53,28 @@
 {% endblock content %}
 
 {% block extrascripts %}
-    <script type="text/javascript" src="{% static 'calendar/js/plugins/jquery.dataTables.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'calendar/js/plugins/dataTables.bootstrap.min.js' %}"></script>
-    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script src="{% static 'calendar/js/plugins/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'calendar/js/plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script >$('#sampleTable').DataTable({
+        "language": {
+    "sProcessing": "Przetwarzanie ...",
+    "sLengthMenu": "Pokaż _MENU_ rekordów",
+    "sZeroRecords": "Żadne dane nie pasują do wprowadzonych",
+    "sEmptyTable": "Brak danych do wyświetlenia",
+    "sInfo": "Wyświetla od _START_ do _END_ z _TOTAL_",
+    "sInfoEmpty": "Nie znaleziono żadnych dopasowań",
+    "sInfoFiltered": "(filtrowano z _MAX_)",
+    "sInfoPostFix": "",
+    "sSearch": "Szukaj:",
+    "sUrl": "",
+    "sInfoThousands": ",",
+    "sLoadingRecords": "Wczytywanie rekordów..",
+    "oPaginate": {
+      "sFirst": "Pierwszy", "sLast": "Ostatni", "sNext": "Następny", "sPrevious": "Poprzedni"
+    },
+    "oAria": {
+      "sSortAscending": ": Sortuj rosnąco", "sSortDescending": ": Sortuj malejąco"
+    }
+  }
+        });</script>
 {% endblock extrascripts %}

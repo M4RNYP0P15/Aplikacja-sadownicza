@@ -9,7 +9,6 @@ from django.views import  View
 from store.models.product import Products
 from django.contrib import messages
 
-
 def cart_view(request):
     #for cart counter
     if 'product_ids' in request.COOKIES:
@@ -44,7 +43,7 @@ def add_to_cart_view(request,pk):
     else:
         product_count_in_cart=1
 
-    response = render(request, '/index.html',{'products':products,'product_count_in_cart':product_count_in_cart,'redirect_to' : request.GET['next_page']})
+    response = render(request, 'index.html',{'products':products,'product_count_in_cart':product_count_in_cart,'redirect_to' : request.GET['next_page']})
 
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
@@ -89,7 +88,7 @@ def remove_from_cart_view(request,pk):
                 value=value+product_id_in_cart[0]
             else:
                 value=value+"|"+product_id_in_cart[i]
-        response = render(request, '/cart.html',{'products':products,'total':total,'product_count_in_cart':product_count_in_cart,'redirect_to' : request.GET['next_page']})
+        response = render(request, 'cart.html',{'products':products,'total':total,'product_count_in_cart':product_count_in_cart,'redirect_to' : request.GET['next_page']})
         if value=="":
             response.delete_cookie('product_ids')
         response.set_cookie('product_ids',value)
@@ -116,8 +115,6 @@ def customer_address_view(request):
         addressForm = AddressForm(request.POST)
         if addressForm.is_valid():
             # here we are taking address, email, mobile at time of order placement
-            # we are not taking it from customer account table because
-            # these thing can be changes
             email = addressForm.cleaned_data['Email']
             mobile=addressForm.cleaned_data['Mobile']
             address = addressForm.cleaned_data['Address']
@@ -131,12 +128,12 @@ def customer_address_view(request):
                     for p in products:
                         total=total+p.price
 
-            response = render(request, 'm/payment.html',{'total':total})
+            response = render(request, 'payment.html',{'total':total})
             response.set_cookie('email',email)
             response.set_cookie('mobile',mobile)
             response.set_cookie('address',address)
             return response
-    return render(request,'ecom/customer_address.html',{'addressForm':addressForm,'product_in_cart':product_in_cart,'product_count_in_cart':product_count_in_cart})
+    return render(request,'customer_address.html',{'addressForm':addressForm,'product_in_cart':product_in_cart,'product_count_in_cart':product_count_in_cart})
 
 def payment_success_view(request):
     # Here we will place order | after successful payment
@@ -171,7 +168,7 @@ def payment_success_view(request):
         Order.objects.get_or_create(customer=customer,product=product,status='Oczekujące',email=email,mobile=mobile,address=address)
 
     # after order placed cookies should be deleted
-    response = render(request,'m/payment_success.html')
+    response = render(request,'payment_success.html')
     response.delete_cookie('product_ids')
     response.delete_cookie('email')
     response.delete_cookie('mobile')

@@ -4,8 +4,6 @@ from my_calendar.models import Event
 
 
 class AllEventsListView(ListView):
-    """ All event list views """
-
     template_name = "calendar/events_list.html"
     model = Event
 
@@ -14,10 +12,15 @@ class AllEventsListView(ListView):
 
 
 class RunningEventsListView(ListView):
-    """ Running events list view """
-
     template_name = "calendar/events_list.html"
     model = Event
 
     def get_queryset(self):
         return Event.objects.get_running_events(user=self.request.user)
+
+class UpcomingEventsListView(ListView):
+    template_name = "calendar/events_list.html"
+    model = Event
+
+    def get_queryset(self):
+        return Event.objects.get_upcoming_events(user=self.request.user)

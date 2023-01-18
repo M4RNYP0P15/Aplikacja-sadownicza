@@ -1,5 +1,6 @@
 # from django.db import models
 from ..models import customer, product, orders, category
+from dictionary.models import article
 # from django.contrib.auth.models import User
 
 from django.shortcuts import render, redirect
@@ -8,16 +9,69 @@ from django.http import HttpResponse, HttpResponseRedirect
 from ..decorators import user_is_superuser, user_is_moderator
 from .. import forms
 from django.contrib import messages
+import json
+from django.utils.safestring import mark_safe
+from datetime import datetime, timedelta
+# from django.utils.translation import ugettext as _
 
+def is_leap_year(year): 
+    if year % 100 == 0:
+        return year % 100 == 0
 
+    return year % 4 == 0
+
+def get_lapse(date):
+    last_month = date.month
+    current_year = date.year
+
+    if last_month in [9, 4, 6, 11]:
+        lapse = 30
+
+    elif last_month in [1, 3, 5, 7, 8, 10, 12]:
+        lapse = 31
+    else:
+        if is_leap_year(current_year):
+            lapse = 29
+        else:
+            lapse = 30
+
+    return lapse
+
+from django.db.models.functions import TruncMonth
 # @login_required(login_url='adminlogin')
-@user_is_superuser
+@user_is_moderator
 def admin_dashboard_view(request):
     customercount=customer.Customer.objects.all().count()
     productcount=product.Products.objects.all().count()
     ordercount=orders.Order.objects.all().count()
+    articlescount=article.Article.objects.all().count()
 
     _orders=orders.Order.objects.all()
+    labelschart = ['']*12
+    datachart =[0]*12
+    f_date = datetime.today() # dzisiejsza data
+    last_month_filter = f_date - timedelta(days=f_date.day, hours=f_date.hour, minutes=f_date.minute)
+    # s_date = timedelta(days=get_lapse(f_date)) # ilość dni
+    
+    for i in reversed(range(12)):
+        # print("od")
+        # print(f_date)
+        # print(last_month_filter)
+        # print(f_date.strftime('%b'))
+        labelschart[i]=f_date.strftime('%b')
+        last_year_orders = orders.Order.objects.filter(date__gte=last_month_filter, date__lte=f_date)
+        sum = 0
+        for item in last_year_orders:
+            sum += item.price
+        datachart[i] = sum
+        f_date = last_month_filter
+        last_month_filter = f_date - timedelta(days=get_lapse(f_date))
+        # s_date = timedelta(days=get_lapse(f_date))
+    # datachart = [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 35000]
+
+    # print(datachart)
+    # print(labelschart)
+
     ordered_products=[]
     ordered_bys=[]
     for order in _orders:
@@ -30,6 +84,9 @@ def admin_dashboard_view(request):
     'customercount':customercount,
     'productcount':productcount,
     'ordercount':ordercount,
+    'articlescount':articlescount,
+    'datachart': mark_safe(json.dumps(datachart)),
+    'labelschart': mark_safe(json.dumps(labelschart)),
     'data':zip(ordered_products,ordered_bys,_orders),
     }
     return render(request,'admin/admin_dashboard.html',context=mydict)

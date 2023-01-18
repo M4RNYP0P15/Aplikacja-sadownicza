@@ -2,78 +2,60 @@
 <html lang="pl">
     {% load static %}
     <head>
-        <meta name="description" content="Event Dashboard" />
-        <!-- Open Graph Meta-->
         <title>{% block title %}{% endblock title  %}</title>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- Main CSS-->
-        <link rel="stylesheet" type="text/css" href="{% static 'calendar/css/main.css' %}" />
-        <!-- Font-icon css-->
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{% static 'calendar/css/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         {% block extracss %}
         {% endblock extracss %}
     </head>
     <body class="app sidebar-mini">
-        <!-- Navbar-->
         <header class="app-header">
-            <a class="app-header__logo" href="#">Kalendarz</a>
-            <!-- Sidebar toggle button-->
+            <a class="app-header__logo" href="#">E-Sadownik</a>
             <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-            <!-- Navbar Right Menu-->
             <ul class="app-nav">
                 <li class="app-search">
-                    <input class="app-search__input" type="search" placeholder="Search" />
+                    <input class="app-search__input" type="search" placeholder="Szukaj">
                     <button class="app-search__button"><i class="fa fa-search"></i></button>
                 </li>
-                <!-- User Menu-->
                 <li class="dropdown">
-                    <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
+                    <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu">{{user.username}}<i class="fa fa-user fa-lg"></i></a>
                     <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                        <li>
-                            <a class="dropdown-item" href="#"><i class="fa fa-user fa-lg"></i> Profil</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'store:logout' %}"><i class="fa fa-sign-out fa-lg"></i> Wyloguj się</a>
-                        </li>
+                        <li><a class="dropdown-item" href="{% url 'store:profile' user.username %}">Profil</a></li>
+                        <li><a class="dropdown-item" href="{% url 'my_calendar:calendar' %}">Panel użytkownika</a></li>
+                        <li><a class="dropdown-item" href="/orders">Zamówienia</a></li>
+                        {% if user.is_superuser %}
+                        <li><a class="dropdown-item" href="{% url 'store:admin-dashboard' %}">Admin Panel</a></li>
+                        <li><a class="dropdown-item" href="/admin">Admin</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{% url 'store:logout' %}"> Wyloguj się</a></li>
                     </ul>
                 </li>
             </ul>
         </header>
-        <!-- Sidebar menu-->
+
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
         <aside class="app-sidebar">
             <div class="app-sidebar__user">
-                <img class="app-sidebar__user-avatar" src="{{ request.user.profile_pic.url }}" alt="User Image" height="50px" width="50px"/>
+                <img class="app-sidebar__user-avatar" src="{{ request.user.profile_pic.url }}" alt="User Image" height="50" width="50">
                 <div>
                     <p class="app-sidebar__user-name">{{ request.user }}</p>
                     <p class="app-sidebar__user-designation">{{ request.user.status }}</p>
                 </div>
             </div>
             <ul class="app-menu">
-                <li>
-                    <a class="app-menu__item active" href="{% url 'my_calendar:dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a>
-                </li>
-                <li>
-                    <a class="app-menu__item" href="{% url 'my_calendar:calendar' %}"><i class="app-menu__icon fa fa-calendar"></i><span class="app-menu__label">Calendar</span></a>
-                </li>
+                <li><a class="app-menu__item {% if 'dashboar' in request.path %} active{% endif %}" href="{% url 'my_calendar:dashboard' %}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Pulpit</span></a></li>
+                <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Powrót do strony głównej</span></a></li>
+                <li><a class="app-menu__item{% if 'calender' in request.path %} active{% endif %}" href="{% url 'my_calendar:calendar' %}"><i class="app-menu__icon fa fa-calendar"></i><span class="app-menu__label">Kalendarz</span></a></li>
                 <li class="treeview">
-                    <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Wydarzenia</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                    <a class="app-menu__item {% if 'event' in request.path %} active{% endif %}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Wydarzenia</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                        <li>
-                            <a class="treeview-item" href="{% url 'my_calendar:running_events' %}"><i class="icon fa fa-circle-o"></i> Aktywne</a>
-                        </li>
-                        <li>
-                            <a class="treeview-item" href="{% url 'my_calendar:running_events' %}"><i class="icon fa fa-circle-o"></i> Upcoming</a>
-                        </li>
-                        <li>
-                            <a class="treeview-item" href="{% url 'my_calendar:all_events' %}"><i class="icon fa fa-circle-o"></i> Wszystkie</a>
-                        </li>
+                        <li><a class="treeview-item {% if 'running' in request.path %} active{% endif %}" href="{% url 'my_calendar:running_events' %}"><i class="icon fa fa-circle-o"></i> Aktywne</a></li>
+                        <li><a class="treeview-item {% if 'upcoming' in request.path %} active{% endif %}" href="{% url 'my_calendar:upcoming_events' %}"><i class="icon fa fa-circle-o"></i> Nadchodzące</a></li>
+                        <li><a class="treeview-item {% if 'all' in request.path %} active{% endif %}" href="{% url 'my_calendar:all_events' %}"><i class="icon fa fa-circle-o"></i> Wszystkie</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a class="app-menu__item" href="#"><i class="app-menu__icon fa fa-file-code-o"></i><span class="app-menu__label">Docs</span></a>
                 </li>
             </ul>
         </aside>
@@ -85,8 +67,12 @@
             {% block content %}
             {% endblock content %}
         </main>
-        <!-- Essential javascripts for application to work-->
-        {% include 'base/js.html' %}
+        <script src="{% static 'calendar/js/js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'calendar/js/popper.js' %}"></script>
+        <script src="{% static 'calendar/js/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'calendar/js/main.js' %}"></script>
+
+<script src="{% static 'calendar/js/plugins/pace.min.js'%}"></script>
         {% block extrascripts %}
         {% endblock extrascripts %}
     </body>

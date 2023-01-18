@@ -67,42 +67,35 @@
 </style>
 
 </head>
-<!--
-written By : sumit kumar
--->
-<br><br><br><br>
 
 <div class="container">
   <div class="panel panel-success">
     <div class="panel-heading">
-      <h6 style="text-align:center;" class="panel-title">My Cart</h6>
+      <h6 style="text-align:center;" class="panel-title">Mój koszyk</h6>
     </div>
     <table class="table table-hover table-bordered" id="dev-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Action</th>
+          <th>Nazwa</th>
+          <th>Zdjęcie</th>
+          <th>Cena</th>
+          <th>Opis</th>
+          <th>Akcje</th>
 
         </tr>
       </thead>
       {% for p in products %}
-  {% if p %}
-
+      {% if p %}
       <tr>
         <td> {{p.name}}</td>
-        <td> <img src="{% static p.product_image.url %}" alt="Profile Pic" height="50px" width="50px" /></td>
-        <td>$ {{p.price}}</td>
+        <td> <img src="{{ p.image.url }}" alt="Profile Pic" height="50" width="50" ></td>
+        <td>{{p.price}} PLN</td>
         <td>{{p.description}}</td>
 
-        <td><a class="btn btn-danger btn-xs" href="{% url 'remove-from-cart' p.id  %}?next_page={{request.path}}"><span class="glyphicon glyphicon-trash"></span></a></td>
-
+        <td><a class="btn btn-danger btn-xs" href="{% url 'store:remove-from-cart' p.id  %}?next_page={{request.path}}"><span class="glyphicon glyphicon-trash"></span></a></td>
       </tr>
       {%else%}
-      <br><br><br>
-      <h1>no products</h1>
+      <h1>Brak produktów</h1>
       {% endif %}
       {% endfor %}
     </table>
@@ -110,7 +103,7 @@ written By : sumit kumar
 </div>
 <br><br><br>
 <div style="text-align: center;">
-  <button class="btn btn-danger btn-lg">Total ${{total}}</button>
-  <a href="/customer-address"><button class="btn btn-success btn-lg" ><span>Purchase </span></button></a>
+  <button class="btn btn-danger btn-lg">Suma {{total}} PLN</button>
+  <a href="/customer-address"><button class="btn btn-success btn-lg" ><span>Kup </span></button></a>
 </div>
 {% endblock content %}

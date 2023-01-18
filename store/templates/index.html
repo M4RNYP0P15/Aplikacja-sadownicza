@@ -1,23 +1,72 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 {% load cart %}
 {% load custom_filter %}
 <div class="container-fluid mt-3">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">Sklep</a></li>
+					{% for category in data.hist_category %}
+						{% if category %}
+
+							<li class="breadcrumb-item {% if category.id == data.cur_category|add:'0' %} active{% endif %}" >{% if category.pk != data.cur_category|add:'0' %}<a href="/?category={{category.id}}" >{{category.title}}</a>{% else %}{{category.title}}{% endif %}</li>
+
+						{% endif %}
+					{% endfor %}
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-lg-3 mx-auto">
-			<div class="list-group">
-				<a href="/" class="list-group-item list-group-item-action btn btn-outline-success">Wszystkie produkty</a>
+			<div class="card card-body">
+				<form  action="/search" method="get">
+					<div class="row">
+						<input class="navbar-input col-lg-9 form-control" value="{% if search_text %}{{ search_text }}{% endif %}" type="search" placeholder="Szukaj produktów" name="query" id="query">
+					  <button class="navbar-button col-lg-auto" type="submit"><i class="fas fa-search"></i></button>
+					</div>
+				  </form>
+			</div>
 
-				{% for category in categories %}
-				<a href="/?category={{category.id}}"
-					class="list-group-item list-group-item-action btn btn-outline-success ">{{category.title}}</a>
-				{% endfor %}
+			<div class="card card-body">
+				<div class="card-title">Kategoria</div>
+				<div class="list-group">
+					<a href="/" class="list-group-item list-group-item-action btn btn-outline-success">Wszystkie produkty</a>
+
+					{% for category in data.categories %}
+						{% if data.cur_category != Null %}
+							{% if category.parent.id == data.cur_category|add:"0" %}
+						<a href="/?category={{category.id}}" class="list-group-item list-group-item-action btn btn-outline-success ">{{category.title}}</a>
+							{% endif %}
+
+						{% else %}
+
+							{% if category.parent == Null %}
+						<a href="/?category={{category.id}}" class="list-group-item list-group-item-action btn btn-outline-success ">{{category.title}}</a>
+							{% endif %}
+
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="card card-body">
+				<div class="card-title">Przedział ceny</div>
+				<div id="slider-range" class="slider"></div>
+				<div class="slider-info">
+					<span id="slider-range-amount"></span>
+				</div>
 			</div>
 		</div>
 
 		<div id='products' class="col-lg-9 mx-auto">
 			<div class="row mx-auto">
-				{% for product in products %}
+				{% for product in data.page_obj %}
 				<div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
 					<img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
 					<div class="card-body">
@@ -55,6 +104,7 @@
 				</div>
 				{% endfor %}
 			</div>
+			{% include 'pagination.html' %}
 		</div>
 	</div>
 </div>

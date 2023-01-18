@@ -8,7 +8,6 @@ from store.models import Customer
 
 
 class EventManager(models.Manager):
-    """ Event manager """
 
     def get_all_events(self, user):
         events = Event.objects.filter(user=user, is_active=True, is_deleted=False)
@@ -22,6 +21,15 @@ class EventManager(models.Manager):
             end_time__gte=datetime.now().date(),
         ).order_by("start_time")
         return running_events
+
+    def get_upcoming_events(self, user):
+        upcoming_events = Event.objects.filter(
+            user=user,
+            is_active=True,
+            is_deleted=False,
+            start_time__gte=datetime.now().date(),
+        ).order_by("start_time")
+        return upcoming_events
 
 
 class Event(EventAbstract):

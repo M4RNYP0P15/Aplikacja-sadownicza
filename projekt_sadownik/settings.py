@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'captcha',
     'tinymce',
+    'django_filters',
 ]
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
