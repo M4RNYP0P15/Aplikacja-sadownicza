@@ -29,7 +29,7 @@ def render_to_pdf(template_src, context_dict):
     template = get_template(template_src)
     html  = template.render(context_dict)
     result = io.BytesIO()
-    pdf = pisa.pisaDocument(io.BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(io.BytesIO(html.encode("ISO-8859-2")), result)
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return
@@ -44,7 +44,7 @@ def download_invoice_view(request,orderID,productID):
         'customerEmail':order.email,
         'customerMobile':order.phone,
         'shipmentAddress':order.address,
-        'orderStatus':order.status.encode('utf-8'),
+        'orderStatus':order.status.encode("ISO-8859-2"),
 
         'productName':product.name,
         'productImage':product.image,

@@ -91,21 +91,17 @@ def admin_dashboard_view(request):
     }
     return render(request,'admin/admin_dashboard.html',context=mydict)
 
-# login_required(login_url='adminlogin')
 @user_is_moderator
 def view_customer_view(request):
     customers=customer.Customer.objects.all()
     return render(request,'admin/view_customer.html',{'customers':customers})
 
-# @login_required(login_url='adminlogin')
 @user_is_superuser
 def delete_customer_view(request,pk):
     _customer=customer.Customer.objects.get(id=pk)
     _customer.delete()
     return redirect('store:view-customer')
 
-
-# @login_required(login_url='adminlogin')
 @user_is_superuser
 def update_customer_view(request,pk):
     _customer=customer.Customer.objects.get(id=pk)
@@ -148,7 +144,7 @@ def admin_add_product_view(request):
 def delete_product_view(request,pk):
     _product=product.Products.objects.get(id=pk)
     _product.delete()
-    return redirect('admin-products')
+    return redirect('store:admin-products')
 
 
 # @login_required(login_url='adminlogin')
@@ -160,7 +156,7 @@ def update_product_view(request,pk):
         productForm=forms.ProductForm(request.POST,request.FILES,instance=_product)
         if productForm.is_valid():
             productForm.save()
-            return redirect('admin-products')
+            return redirect('store:admin-products')
     return render(request,'admin/admin_update_product.html',{'productForm':productForm})
 
 
@@ -213,7 +209,7 @@ def admin_add_category(request):
         else:
             for error in list(categoryForm.errors.values()):
                 messages.error(request, error)
-        return HttpResponseRedirect('admin-add-category')
+        return HttpResponseRedirect('store:admin-add-category')
     return render(request,'admin/admin_add_category.html',{'categoryForm':categoryForm})
 
 @user_is_moderator

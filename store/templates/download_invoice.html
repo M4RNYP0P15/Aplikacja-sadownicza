@@ -121,7 +121,7 @@
           <table class="table table-bordered table-striped">
             <tr>
               <td class="title"><h5>E-Sadownik</h5></td>
-              <td>Data Zakupu: {{orderDate}}<br></td>
+              <td>Data zakupu: {{orderDate}}<br></td>
             </tr>
           </table>
         </td>
@@ -152,15 +152,14 @@
             <tr>
               <td>
                 Obraz produktu :<br>
-                 <img src="{{ product_image.url }}" alt="Profile Pic" height="40px" width="40px" /><br><br>
+                 <img src="{{ productImage.url }}" alt="Profile Pic" height="40px" width="40px" /><br><br>
                 Cena produktu : <br>
-                ${{productPrice}}
+                {{productPrice}} PLN
               </td>
               <td>
                 Produkt: <br> {{productName}}<br><br>
                 Opis: <br> {{productDescription}}
               </td>
-
             </tr>
           </table>
         </td>

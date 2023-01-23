@@ -12,3 +12,22 @@
 {% endblock content %}
 {% block script %}
 {% endblock script %}
+
+
+<li><hr class="sidebar-divider"></li>
+<li><div class="sidebar-heading">Artykuły</div></li>
+
+<li class="nav-item {% if 'article' in request.path %}active{% endif %}">
+    <a id="headingPages" class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-cog"></i><span>Zarządzaj</span>
+    </a>
+    <div id="collapsePages" class="collapse {% if 'article' in request.path %}show{% endif %}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item {% if '/admin-view-articles' in request.path %}active{% endif %}" href="/admin-view-articles">Lista</a>
+            <a class="collapse-item {% if '/admin-add-article' in request.path %}active{% endif %}" href="/admin-add-article" >Dodaj artykuł</a>
+            <!-- <a href="/view-feedback" class="nav-item nav-link">Feedback</a> -->
+        </div>
+    </div>
+</li>
+
+<li class="nav-item"><a class="nav-link" href="c"><i class="fas fa-fw fa-chart-area"></i><span>Terminarz</span></a></li>
