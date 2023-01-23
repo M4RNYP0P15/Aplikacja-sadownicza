@@ -13,7 +13,7 @@ from .views.password_back import password_change, password_reset_request, passwo
 # from django.contrib.auth.views import LogoutView, LoginView
 from .views.profile import profile
 from .views.searching import search_view
-from .views.admin_dashboard import admin_dashboard_view, admin_add_product_view, admin_products_view, admin_view_booking_view, view_customer_view, delete_order_view, update_order_view, delete_product_view, update_product_view, delete_customer_view, update_customer_view, admin_add_category, admin_category_view, delete_category_view, update_category_view
+from .views.admin_dashboard import admin_dashboard_view, admin_add_product_view, admin_products_view, admin_view_booking_view, view_customer_view, delete_order_view, update_order_view, delete_product_view, update_product_view, delete_customer_view, update_customer_view, admin_add_category, admin_category_view, delete_category_view, update_category_view, admin_article_view, delete_article_view, update_article_view, admin_add_article
 app_name = "store"
 
 urlpatterns = [
@@ -48,10 +48,15 @@ urlpatterns = [
     path('update-product/<int:pk>', update_product_view,name='update-product'),
     path('delete-product/<int:pk>', delete_product_view,name='delete-product'),
 
-    path('admin-add-category', admin_add_category,name='admin-add-category'),
-    path('admin-view-category', admin_category_view,name='admin-view-category'),
-    path('update-category/<int:pk>', update_category_view,name='update-category'),
-    path('delete-category/<int:pk>', delete_category_view,name='delete-category'),
+    path('admin-add-category', admin_add_category, name='admin-add-category'),
+    path('admin-view-category', admin_category_view, name='admin-view-category'),
+    path('update-category/<int:pk>', update_category_view, name='update-category'),
+    path('delete-category/<int:pk>', delete_category_view, name='delete-category'),
+
+    path('admin-add-article', admin_add_article, name='admin-add-article'),
+    path('admin-view-article', admin_article_view, name='admin-view-article'),
+    path('update-article/<int:pk>', update_article_view, name='update-article'),
+    path('delete-article/<int:pk>', delete_article_view, name='delete-article'),
 
 
     path('admin-view-booking', admin_view_booking_view,name='admin-view-booking'),

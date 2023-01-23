@@ -61,6 +61,20 @@
                 </div>
             </li>
 
+            
+            <li class="nav-item {% if 'article' in request.path %}active{% endif %}">
+                <a id="headingUtilities1" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities1" aria-expanded="true" aria-controls="collapseUtilities1">
+                    <i class="fas fa-fw fa-wrench"></i><span>Artykuły</span>
+                </a>
+                <div id="collapseUtilities1" class="collapse {% if 'article' in request.path %}show{% endif %}" aria-labelledby="headingUtilities1" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {% if '/admin-view-article' in request.path %}active{% endif %}" href="/admin-view-article">Lista</a>
+                        <a class="collapse-item {% if '/admin-add-article' in request.path %}active{% endif %}" href="/admin-add-article">Dodaj</a>
+                    </div>
+                </div>
+            </li>
+
+
             <li><hr class="sidebar-divider d-none d-md-block"></li>
             <li><div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div></li>
         </ul>

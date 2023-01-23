@@ -36,6 +36,11 @@ class Article(models.Model):
             breadcrumb[i] = '/'.join(breadcrumb[-1:i-1:-1])
         return breadcrumb[-1:0:-1]
 
+    def save(self, *args, **kwargs): 
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
     @property
     def slug(self):
         return self.category.slug + "/" + self.slug

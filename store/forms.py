@@ -1,8 +1,11 @@
 from django import forms
 # from django.contrib.auth.models import User
 from .models import category, customer, orders, product
+from dictionary.models import article
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm, PasswordChangeForm, PasswordResetForm, UserCreationForm
 from django.contrib.auth import get_user_model
+
+from tinymce.widgets import TinyMCE
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
@@ -121,3 +124,11 @@ class AddCategory(forms.ModelForm):
             'subtitle' : 'Opis',
             'parent': 'Kategoria nadrzędna',
         }
+
+class AddArticle(forms.ModelForm):
+    content = forms.CharField(
+        widget=TinyMCE()
+    )
+    class Meta:
+        model=article.Article
+        fields=['title', 'subtitle', 'category', 'image']

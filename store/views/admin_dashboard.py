@@ -234,3 +234,40 @@ def delete_category_view(request,pk):
     _category=category.Category.objects.get(id=pk)
     _category.delete()
     return redirect('store:admin-view-category')
+
+@user_is_superuser
+def admin_add_article(request):
+    form = forms.AddArticle() #
+    if request.method=='POST':
+        form=forms.AddArticle(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request, error)
+        return HttpResponseRedirect('store:admin-add-article')
+    return render(request,'admin/admin_add_article.html',{'form':form})
+
+@user_is_moderator
+def admin_article_view(request):
+    elements=article.Article.objects.all()
+    return render(request,'admin/admin_view_articles.html',{'elements':elements})
+
+@user_is_superuser
+def update_article_view(request,pk):
+    _element=article.Article.objects.get(id=pk)
+    if request.method=='POST':
+        form=forms.AddArticle(request.POST, instance=_element)
+        if form.is_valid():
+            form.save()
+            return redirect('store:admin-view-article')
+
+    form=forms.AddArticle(instance=_element)
+    return render(request,'admin/admin_update_article.html',context={'form':form})
+
+@user_is_superuser
+def delete_article_view(request,pk):
+    _category=article.Article.objects.get(id=pk)
+    _category.delete()
+    return redirect('store:admin-view-article')
+
