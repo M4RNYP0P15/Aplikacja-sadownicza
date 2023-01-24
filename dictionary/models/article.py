@@ -41,9 +41,9 @@ class Article(models.Model):
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
-    @property
-    def slug(self):
-        return self.category.slug + "/" + self.slug
+    # @property
+    # def slug(self):
+    #     return self.category.slug + "/" + self.slug
 
     class Meta:
         verbose_name_plural = "articles"

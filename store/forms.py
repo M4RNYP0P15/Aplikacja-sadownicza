@@ -126,9 +126,19 @@ class AddCategory(forms.ModelForm):
         }
 
 class AddArticle(forms.ModelForm):
-    content = forms.CharField(
-        widget=TinyMCE()
-    )
+    # content = forms.CharField(
+    #     widget=TinyMCE()
+    # )
+    # labels = {
+    #         'content': 'Treść',
+    #     }
     class Meta:
         model=article.Article
-        fields=['title', 'subtitle', 'category', 'image']
+        fields=['title', 'subtitle', 'content', 'category', 'image']
+        labels = {
+            'title': 'Nazwa',
+            'subtitle' : 'Podtytuł',
+            'category':'Kategoria',
+            'content': 'Treść',
+            'image': 'Zdjęcie',
+        }

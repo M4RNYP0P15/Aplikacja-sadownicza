@@ -2,7 +2,7 @@
 from ..models import customer, product, orders, category
 from dictionary.models import article
 # from django.contrib.auth.models import User
-
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -239,13 +239,13 @@ def delete_category_view(request,pk):
 def admin_add_article(request):
     form = forms.AddArticle() #
     if request.method=='POST':
-        form=forms.AddArticle(request.POST)
+        form=forms.AddArticle(request.POST, request.FILES)
         if form.is_valid():
             form.save()
         else:
             for error in list(form.errors.values()):
                 messages.error(request, error)
-        return HttpResponseRedirect('store:admin-add-article')
+        return HttpResponseRedirect(reverse('store:admin-add-article'))
     return render(request,'admin/admin_add_article.html',{'form':form})
 
 @user_is_moderator
@@ -257,7 +257,7 @@ def admin_article_view(request):
 def update_article_view(request,pk):
     _element=article.Article.objects.get(id=pk)
     if request.method=='POST':
-        form=forms.AddArticle(request.POST, instance=_element)
+        form=forms.AddArticle(request.POST, request.FILES, instance=_element)
         if form.is_valid():
             form.save()
             return redirect('store:admin-view-article')
