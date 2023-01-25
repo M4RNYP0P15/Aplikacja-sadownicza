@@ -11,7 +11,7 @@ class Order(models.Model):
         ('Dostarczono', 'Dostarczono')
     )
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_DEFAULT, null=True, default=None)
     email = models.CharField(max_length=50,null=True)
     quantity = models.IntegerField(default=1)
     price = models.IntegerField()

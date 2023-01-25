@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+      
+  {% block content %}
+
+    <header class="masthead" >
+      <div class="overlay"></div>
+        <div class="container">
+          <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+              <div class="site-heading">
+                <h3 class=" site-heading my-4 mt-3 text-black"> Wszystkie rośliny </h3>
+                <!-- <p class="text-dark">.! &nbsp</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="container mt-5">
+      <div class="row">
+      
+      <!-- Blog Entries Column -->
+        <!-- <div class="card col-lg-6 offset-lg-3 mb-3"> -->
+          {% for post in article_list %}
+            <div class="card col-lg-8 offset-lg-2 mb-2" >
+              {% if post.image %}
+                <img class="card-img-top mt-3" src="{{ post.image.url }}" alt="{{ post.title }}">
+              {% endif %}
+                <div class="card-body">
+                  <!-- <a href=""> -->
+                    <h2 class="card-title my-3">{{ post.title }} </h2>
+                  <!-- </a> -->
+                  <p class="text-muted mb-3">{{ post.author }} | {{ post.publish_date}}</p>
+                  <p class="text-muted mb-3">Zmodyfikowano: {{ post.modified_date|timesince }} temu</p>
+                  <div>
+                    <span class="badge badge-primary">{{ post.category }}</span>
+                    {% for tag in post.tags.all %}
+                      <span class="badge badge-dark">{{ tag }}</span>
+                    {% endfor %}
+                  </div>
+                  <!-- <p class="card-text">{{post.content|slice:":10"}}</p> -->
+                  
+                  <a href="{% url 'encyklopedia:post_detail' post.slug  %}" class="btn btn-primary">Więcej &rarr;</a>
+                </div>
+            </div>
+          {% endfor %}
+      </div>
+    
+    <div class="row">
+      <nav class="col-lg-6 offset-lg-3 mt-4 d-flex justify-content-center">
+        <ul class="pagination">
+  
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#">&laquo;</a>
+          </li>
+          {% endif %}
+    
+          {% for i in page_obj.paginator.page_range %}
+          <li class=" page-item {% if page_obj.number == i %}active{% endif %}">
+              <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+          </li>
+          {% endfor %}
+  
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#">&raquo;</a>
+          </li>
+          {% endif %}
+  
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+{%endblock%}
