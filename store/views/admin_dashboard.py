@@ -113,7 +113,11 @@ def update_customer_view(request,pk):
             # user.set_password(user.password)
             # user.save()
             # customerForm.save()
+            messages.success(request, "Pomyślnie zaktualizowano")
             return redirect('store:view-customer')
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request, error)
     # user=User.objects.get(id=_customer.user_id)
     form=forms.CustomerUserForm(instance=_customer)
     # customerForm=forms.CustomerForm(request.FILES,instance=_customer)
@@ -132,6 +136,7 @@ def admin_add_product_view(request):
         productForm=forms.ProductForm(request.POST, request.FILES)
         if productForm.is_valid():
             productForm.save()
+            messages.success(request, "Pomyślnie dodano nowy produkt")
         else:
             for error in list(productForm.errors.values()):
                 messages.error(request, error)
@@ -144,6 +149,7 @@ def admin_add_product_view(request):
 def delete_product_view(request,pk):
     _product=product.Products.objects.get(id=pk)
     _product.delete()
+    messages.success(request, "Pomyślnie usunięto")
     return redirect('store:admin-products')
 
 
@@ -156,6 +162,7 @@ def update_product_view(request,pk):
         productForm=forms.ProductForm(request.POST,request.FILES,instance=_product)
         if productForm.is_valid():
             productForm.save()
+            messages.success(request, "Pomyślnie zaktualizowano")
             return redirect('store:admin-products')
     return render(request,'admin/admin_update_product.html',{'productForm':productForm})
 
@@ -179,6 +186,7 @@ def admin_view_booking_view(request):
 def delete_order_view(request,pk):
     order=orders.Order.objects.get(id=pk)
     order.delete()
+    messages.success(request, "Pomyślnie usunięto")
     return redirect('store:admin-view-booking')
 
 @user_is_moderator
@@ -189,6 +197,7 @@ def update_order_view(request,pk):
         orderForm=forms.OrderForm(request.POST,instance=order)
         if orderForm.is_valid():
             orderForm.save()
+            messages.success(request, "Pomyślnie zaktualizowano")
             return redirect('store:admin-view-booking')
     return render(request,'admin/admin_update_order.html',{'form':orderForm})
 
@@ -206,10 +215,11 @@ def admin_add_category(request):
         categoryForm=forms.AddCategory(request.POST)
         if categoryForm.is_valid():
             categoryForm.save()
+            messages.success(request, "Pomyślnie dodano kategorię")
         else:
             for error in list(categoryForm.errors.values()):
                 messages.error(request, error)
-        return HttpResponseRedirect('store:admin-add-category')
+        return HttpResponseRedirect('admin-add-category')
     return render(request,'admin/admin_add_category.html',{'categoryForm':categoryForm})
 
 @user_is_moderator
@@ -224,6 +234,7 @@ def update_category_view(request,pk):
         form=forms.AddCategory(request.POST, instance=_category)
         if form.is_valid():
             form.save()
+            messages.success(request, "Pomyślnie zaktualizowano")
             return redirect('store:admin-view-category')
 
     form=forms.AddCategory(instance=_category)
@@ -241,6 +252,7 @@ def admin_add_article(request):
     if request.method=='POST':
         form=forms.AddArticle(request.POST, request.FILES)
         if form.is_valid():
+            messages.success(request, "Pomyślnie dodano artykuł")
             form.save()
         else:
             for error in list(form.errors.values()):
@@ -260,6 +272,7 @@ def update_article_view(request,pk):
         form=forms.AddArticle(request.POST, request.FILES, instance=_element)
         if form.is_valid():
             form.save()
+            messages.success(request, "Pomyślnie zaktualizowano")
             return redirect('store:admin-view-article')
 
     form=forms.AddArticle(instance=_element)
@@ -269,5 +282,6 @@ def update_article_view(request,pk):
 def delete_article_view(request,pk):
     _category=article.Article.objects.get(id=pk)
     _category.delete()
+    messages.success(request, "Pomyślnie usunięto")
     return redirect('store:admin-view-article')
 

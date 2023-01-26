@@ -9,15 +9,15 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.contrib import messages
 
-def is_customer(user):
-    return user.groups.filter(name='CUSTOMER').exists()
+# def is_customer(user):
+#     return user.groups.filter(name='CUSTOMER').exists()
 
 
 def afterlogin_view(request):
-    if is_customer(request.user):
-        return redirect('store:homepage')
-    else:
+    if request.user.is_superuser:
         return redirect('store:admin-dashboard')
+    else:
+        return redirect('store:homepage')
 
 @login_required
 def custom_logout(request):

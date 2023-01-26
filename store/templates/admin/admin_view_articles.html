@@ -19,7 +19,7 @@
                 <tr>
                   <th>Tytuł</th>
                   <th>Podtytuł</th>
-                  <th>Rodzic</th>
+                  <th>Kategoria</th>
                   <th>Akcje</th>
                 </tr>
               </thead>
@@ -28,7 +28,7 @@
                 <tr>
                   <td> {{c.title}}</td>
                   <td>{{c.subtitle}}</td>
-                  <td>{{c.parent}}</td>
+                  <td>{{c.category}}</td>
                   <td><a class="btn btn-primary btn-xs" href="{% url 'store:update-article' c.id  %}"><i class="fas fa-edit"></i></a>
                   <a class="btn btn-danger btn-xs" href="{% url 'store:delete-article' c.id  %}"><i class="fas fa-trash"></i></a></td>
                 </tr>
@@ -38,7 +38,7 @@
                 <tr>
                   <th>Tytuł</th>
                   <th>Podtytuł</th>
-                  <th>Rodzic</th>
+                  <th>Kategoria</th>
                   <th>Akcje</th>
                 </tr>
               </tfoot>

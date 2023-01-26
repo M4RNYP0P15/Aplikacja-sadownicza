@@ -57,6 +57,7 @@
                         <li><a class="treeview-item {% if 'all' in request.path %} active{% endif %}" href="{% url 'my_calendar:all_events' %}"><i class="icon fa fa-circle-o"></i> Wszystkie</a></li>
                     </ul>
                 </li>
+                <li><a class="app-menu__item{% if 'calender' in request.path %} active{% endif %}" href="{% url 'my_calendar:all_user_plants' %}"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">Lista roślin</span></a></li>
             </ul>
         </aside>
         <main class="app-content">

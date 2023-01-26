@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
-from dictionary.models import article
+from dictionary.models import article, user_plants
 from store.models import category
 from django.views import generic
 
@@ -34,6 +34,8 @@ def post_detail(request, slug):
     # connected_comments = post.comments.filter(active=True)
     # number_of_comments = connected_comments.count()
     cat_menu = category.Category.objects.all()
+    if request.user.is_authenticated:
+        plant_list = user_plants.UserPlant.objects.filter(item=post, user=request.user)
     # new_comment = None
     # Comment posted
     # if request.method == 'POST':
@@ -60,7 +62,8 @@ def post_detail(request, slug):
     # else:
     #     comment_form = CommentForm()
     return render(request, template_name, {'post': post,
-                                           'cat_menu': cat_menu})
+                                           'cat_menu': cat_menu,
+                                           'plant_list':plant_list})
     # return render(request, template_name, {'post': post,
     #                                        'comments': connected_comments,
     #                                        'no_of_comments': number_of_comments,

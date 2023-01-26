@@ -13,3 +13,7 @@ class UserPlant(models.Model):
 
     def __str__(self):
         return self.item.title
+    
+    def get_all_user_plants(self, user):
+        events = UserPlant.objects.filter(user=user)
+        return events

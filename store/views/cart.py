@@ -112,7 +112,7 @@ def customer_address_view(request):
         addressForm = AddressForm(request.POST)
         if addressForm.is_valid():
             email = addressForm.cleaned_data['Email']
-            mobile=addressForm.cleaned_data['Mobile']
+            mobile = addressForm.cleaned_data['Mobile']
             address = addressForm.cleaned_data['Address']
             total=0
             if 'product_ids' in request.COOKIES:
@@ -150,7 +150,7 @@ def payment_success_view(request):
         address=request.COOKIES['address']
 
     for product in products:
-        Order.objects.get_or_create(customer=customer,product=product,status='Oczekujące',email=email,phone=mobile,address=address, price=product.price)
+        Order.objects.create(customer=customer,product=product,status='Oczekujące',email=email,phone=mobile,address=address, price=product.price)
 
     response = render(request,'payment_success.html')
     response.delete_cookie('product_ids')

@@ -25,6 +25,7 @@
                   <th>Adres dostawy</th>
                   <th>Produkt</th>
                   <th>Zdjęcie</th>
+                  <th>Cena</th>
                   <th>Status</th>
                   <th>Akcje</th>
                 </tr>
@@ -34,12 +35,13 @@
                 <tr>
                 {% for c in customer %}
                   <td> {{c.get_name}}</td>
-                  <td>{{c.mobile}}</td>
+                  <td>{{c.phone}}</td>
                   <td>{{order.address}}</td>
                 {% endfor %}
                 {% for p in product %}
                   <td>{{p.name}}</td>
                   <td><img src="{{ p.image.url }}" alt="Profile Pic" height="40" width="40"></td>
+                  <td>{{order.price}}</td>
                   <td>{{order.status}}</td>
                   <td><a class="btn btn-primary btn-xs" href="{% url 'store:update-order' order.id  %}"><i class="fas fa-edit"></i></a>
                   <a class="btn btn-danger btn-xs" href="{% url 'store:delete-order' order.id  %}"><i class="fas fa-trash"></i></a></td>
@@ -54,6 +56,7 @@
                   <th>Adres dostawy</th>
                   <th>Produkt</th>
                   <th>Zdjęcie</th>
+                  <th>Cena</th>
                   <th>Status</th>
                   <th>Akcje</th>
                 </tr>

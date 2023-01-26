@@ -16,10 +16,14 @@
             Zmodyfikowano: {{ post.modified_date|timesince }} temu
           </div>
           <div>
+          {% if user.is_authenticated %}
+            {% if plant_list %}<a class="btn btn-outline-danger" href="{% url 'encyklopedia:remove_from_plant_list' post.slug %}">Usuń z listy roślin</a>
+            {% else %}<a class="btn btn-outline-success" href="{% url 'encyklopedia:add_to_plant_list' post.slug %}">Dodaj do listy roślin</a>{% endif %}
+          {% endif %}
             <a class="badge badge-primary" href="#">{{ post.category }}</a>
-            {% for tag in post.tags.all %}
+          {% for tag in post.tags.all %}
             <span class="badge badge-dark">{{ tag }}</span>
-            {% endfor %}
+          {% endfor %}
           </div>
         </div>
       
