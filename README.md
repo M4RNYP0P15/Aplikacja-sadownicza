@@ -26,10 +26,13 @@ Wymagany PostgreSQL
 zmienna w path np.
 setx /M path "%path%;C:\Program Files\PostgreSQL\15\bin"
 
+### Tworzenie użytkownika, bazy, przyznawanie uprawnien
+```
 psql -U postgres
 
 create user my_hero;create database my_db;alter role my_hero with password ‘zaqwsx’;grant all privileges on database my_db to my_hero;alter database my_db owner to my_hero;
 
+```
 ```
 git clone https://github.com/M4RNYP0P15/Aplikacja-sadownicza.git
 ```
@@ -43,11 +46,11 @@ Linux
 ```
 source venv/bin/activate
 ```
-Widows
+Windows
 ```
 venv\Scripts\activate.bat  lub venv\Scripts\activate
 ```
-W przypadku błędu z uprawnieniami: 
+W przypadku błędu z uprawnieniami(Windows): 
 ```
 Set-ExecutionPolicy RemoteSigned
 ```
