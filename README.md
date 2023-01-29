@@ -61,12 +61,11 @@ Instalacja wymaganych bibliotek:
 ```
 pip install -r requirements.txt
 ```
-można pominąć
-
+Usuwanie informacji o migracjach z bazą danych(można pominąć)
 ```
 find . -path “*/migrations/*.py” -not -name “__init__.py” -deletefind . -path “*/migrations/*.pyc” -delete
-
 ```
+Aktualizowanie bazy danych z modelami:(tworzenie/zmiana tabel w zależności od zmian w modelu)
 ```
 python manage.py makemigrations
 ```
