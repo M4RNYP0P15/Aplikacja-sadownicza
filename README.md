@@ -57,6 +57,7 @@ W przypadku błędu z uprawnieniami(Windows):
 ```
 Set-ExecutionPolicy RemoteSigned
 ```
+Instalacja wymaganych bibliotek:
 ```
 pip install -r requirements.txt
 ```
