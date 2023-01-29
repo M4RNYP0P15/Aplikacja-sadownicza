@@ -24,8 +24,11 @@ Aplikacja do zarządzania sądem.
 # Instalacja
 Wymagany PostgreSQL
 zmienna w path np.
+
+```
 setx /M path "%path%;C:\Program Files\PostgreSQL\15\bin"
 
+```
 ### Tworzenie użytkownika, bazy, przyznawanie uprawnien
 ```
 psql -U postgres
@@ -58,13 +61,18 @@ Set-ExecutionPolicy RemoteSigned
 pip install -r requirements.txt
 ```
 można pominąć
+
+```
 find . -path “*/migrations/*.py” -not -name “__init__.py” -deletefind . -path “*/migrations/*.pyc” -delete
+
+```
 ```
 python manage.py makemigrations
 ```
 ```
 python manage.py migrate
 ```
+Czyszczenie objektów oraz wczytywanie danych do bazy
 ```
 python manage.py shell
 from django.contrib.contenttypes.models import ContentType
@@ -72,8 +80,11 @@ ContentType.objects.all().delete()
 
 python manage.py loaddata baza_danych.json
 ```
+Tworzenie administratora(można pominąć):
 ```
 python manage.py createsuperuser
 ```
+Uruchomienie serwera
 ```
 python manage.py runserver
+```
