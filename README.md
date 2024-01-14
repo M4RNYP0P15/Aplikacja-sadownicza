@@ -70,7 +70,7 @@ python manage.py makemigrations
 ```
 python manage.py migrate
 ```
-Czyszczenie objektów oraz wczytywanie danych do bazy
+Czyszczenie obiektów oraz wczytywanie danych do bazy
 ```
 python manage.py shell
 from django.contrib.contenttypes.models import ContentType
