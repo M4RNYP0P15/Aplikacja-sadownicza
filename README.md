@@ -1,6 +1,4 @@
 # Strona sadownicza
->Stworzył: 
->Grzegorz Kamil Marcińczyk
 
 Aplikacja do zarządzania sadem.
 
