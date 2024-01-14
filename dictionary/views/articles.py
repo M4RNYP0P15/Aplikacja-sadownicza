@@ -33,6 +33,7 @@ def post_detail(request, slug):
     # connected_comments = post.comments.filter(CommentPost=self.get_object())
     # connected_comments = post.comments.filter(active=True)
     # number_of_comments = connected_comments.count()
+    plant_list = None
     cat_menu = category.Category.objects.all()
     if request.user.is_authenticated:
         plant_list = user_plants.UserPlant.objects.filter(item=post, user=request.user)

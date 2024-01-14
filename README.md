@@ -8,12 +8,11 @@ Aplikacja do zarządzania sądem.
 - przegląd różnych informacji odnośnie sadu np. pielęgnacja drzew 
 - zakup roślin i środków wzmacniających 
 - możliwość dodania drzewek/krzewów do listy posiadanych drzewek/krzewów:
- -
 - 
 
 ## Wykorzystane narzędzia:
 - Django
-- PostgreSQL
+- PostgreSQL 16
 - HTML, Bootstrap
 
 ## Aktorzy:
@@ -23,10 +22,10 @@ Aplikacja do zarządzania sądem.
 
 # Instalacja
 Wymagany PostgreSQL
-zmienna w path np.
+zmienna w path np. (w przypadku wersji 16) (wym. uruchomienie terminala z uprawnieniami administratora)
 
 ```
-setx /M path "%path%;C:\Program Files\PostgreSQL\15\bin"
+setx /M path "%path%;C:\Program Files\PostgreSQL\16\bin"
 
 ```
 ### Tworzenie użytkownika, bazy, przyznawanie uprawnien
@@ -61,9 +60,10 @@ Instalacja wymaganych bibliotek:
 ```
 pip install -r requirements.txt
 ```
-Usuwanie informacji o migracjach z bazą danych(można pominąć)
+Usuwanie informacji o migracjach z bazą danych(można pominąć - linux version)
 ```
-find . -path “*/migrations/*.py” -not -name “__init__.py” -deletefind . -path “*/migrations/*.pyc” -delete
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc" -delete
 ```
 Aktualizowanie bazy danych z modelami:(tworzenie/zmiana tabel w zależności od zmian w modelu)
 ```

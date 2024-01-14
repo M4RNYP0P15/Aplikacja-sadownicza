@@ -1,0 +1,5 @@
+venv
+*.pyc
+*.pot
+
+__pycache__
