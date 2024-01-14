@@ -1,8 +1,8 @@
 # Strona sadownicza
-Tworzy: 
+>Stworzył: 
 >Grzegorz Kamil Marcińczyk
 
-Aplikacja do zarządzania sądem.
+Aplikacja do zarządzania sadem.
 
 ## Umożliwia:
 - przegląd różnych informacji odnośnie sadu np. pielęgnacja drzew 
