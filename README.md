@@ -1,4 +1,4 @@
-# Strona sadownicza
+# Sadownik - Strona sadownicza
 
 Aplikacja do zarządzania sadem.
 
